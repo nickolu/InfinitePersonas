@@ -1,0 +1,33 @@
+{
+  "name": "speaklore.com",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Chat with a historical figure or fictional character",
+  "author": "Nick Cunningham <nicksdigitalconsulting@gmail.com>",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.12.2",
+    "@mui/system": "^5.12.1",
+    "@types/node": "18.16.2",
+    "@types/react": "18.2.0",
+    "@types/react-dom": "18.2.1",
+    "axios": "^1.4.0",
+    "eslint": "8.39.0",
+    "eslint-config-next": "13.3.1",
+    "install": "^0.13.0",
+    "langchain": "^0.0.66",
+    "next": "13.3.1",
+    "npm": "^9.6.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "sass": "^1.62.1",
+    "typescript": "5.0.4"
+  }
+}
