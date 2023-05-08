@@ -42,7 +42,7 @@ export default function Home() {
     <>
       <Head>
         <title>Infinite Personas - Chat With Anyone You Can Imagine</title>
-        <meta name="description" content="Chat With any Historical Figure" />
+        <meta name="description" content="Chat with anyone you can imagine" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         s <link rel="icon" href="/favicon.ico" />
       </Head>
