@@ -1,18 +1,50 @@
 import Head from 'next/head';
 import BasePageTemplate from '@/components/PageTemplates/BasePageTemplate';
+import SelectCharacter from '@/components/characters/SelectCharacter';
+import {useState} from 'react';
+import CharacterChat from '@/components/characters/CharacterChat';
+import {Character} from '@/core/Character';
+import {Box, Button} from '@mui/material';
 
 function HomePageContent() {
-  return <div>This is where the home page content goes</div>;
+  const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(
+    null
+  );
+
+  if (selectedCharacter) {
+    return (
+      <>
+        <CharacterChat character={selectedCharacter} />
+        <Box mt={2}>
+          <Button
+            onClick={() => {
+              setSelectedCharacter(null);
+            }}
+          >
+            Chat with someone else
+          </Button>
+        </Box>
+      </>
+    );
+  }
+  return (
+    <SelectCharacter
+      {...{
+        selectedCharacter,
+        setSelectedCharacter,
+      }}
+    />
+  );
 }
 
 export default function Home() {
   return (
     <>
       <Head>
-        <title>SpeakLore - Chat With any Historical Figure</title>
+        <title>Infinite Personas - Chat With Anyone You Can Imagine</title>
         <meta name="description" content="Chat With any Historical Figure" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        s <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <BasePageTemplate

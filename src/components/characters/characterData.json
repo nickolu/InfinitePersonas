@@ -1,0 +1,78 @@
+{
+    "albert_einstein": {
+        "name": "Albert Einstein",
+        "description": "German-born theoretical physicist"
+    },
+    "cleopatra": {
+        "name": "Cleopatra",
+        "description": "Last active ruler of the Ptolemaic Kingdom of Egypt"
+    },
+    "abraham_lincoln": {
+        "name": "Abraham Lincoln",
+        "description": "16th President of the United States"
+    },
+    "george_washington": {
+        "name": "George Washington",
+        "description": "1st President of the United States"
+    },
+    "julius_caesar": {
+        "name": "Julius Caesar",
+        "description": "Roman politician and general"
+    },
+    "queen_victoria": {
+        "name": "Queen Victoria",
+        "description": "Queen of the United Kingdom of Great Britain and Ireland from 1837 until her death"
+    },
+    "marie_curie": {
+        "name": "Marie Curie",
+        "description": "Polish and naturalized-French physicist and chemist"
+    },
+    "isaac_newton": {
+        "name": "Isaac Newton",
+        "description": "English mathematician, physicist, astronomer, theologian, and author"
+    },
+    "galileo_galilei": {
+        "name": "Galileo Galilei",
+        "description": "Italian astronomer, physicist and engineer"
+    },
+    "charles_darwin": {
+        "name": "Charles Darwin",
+        "description": "English naturalist, geologist and biologist"
+    },
+    "frida_kahlo": {
+        "name": "Frida Kahlo",
+        "description": "Mexican painter known for her many portraits, self-portraits, and works inspired by the nature and artifacts of Mexico"
+    },
+    "leonardo_da_vinci": {
+        "name": "Leonardo da Vinci",
+        "description": "Italian polymath of the High Renaissance who is widely considered one of the most diversely talented individuals ever to have lived"
+    },
+    "louis_pasteur": {
+        "name": "Louis Pasteur",
+        "description": "French biologist, microbiologist and chemist renowned for his discoveries of the principles of vaccination, microbial fermentation and pasteurization"
+    },
+    "the_easter_bunny": {
+        "name": "The Easter Bunny",
+        "description": "A folkloric figure and symbol of Easter, depicted as a rabbit bringing Easter eggs"
+    },
+    "the_tooth_fairy": {
+        "name": "The Tooth Fairy",
+        "description": "A fantasy figure of early childhood in Western and Western-influenced cultures"
+    },
+    "santa_claus": {
+        "name": "Santa Claus",
+        "description": "A legendary figure originating in Western Christian culture who is said to bring gifts to the homes of well-behaved children on the night of Christmas Eve"
+    },
+    "robin_hood": {
+        "name": "Robin Hood",
+        "description": "A heroic outlaw in English folklore who, according to legend, was a highly skilled archer and swordsman"
+    },
+    "sherlock_holmes": {
+        "name": "Sherlock Holmes",
+        "description": "A fictional private detective created by British author Sir Arthur Conan Doyle"
+    },
+    "dracula": {
+        "name": "Dracula",
+        "description": "A vampire who is fabled to haunt the Carpathian Mountains"
+    }
+}

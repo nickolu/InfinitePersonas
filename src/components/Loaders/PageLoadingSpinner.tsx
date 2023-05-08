@@ -10,10 +10,6 @@ const PageLoadingSpinner = () => {
       width="100%"
     >
       <CircularProgress />
-      <Typography variant="h6" mt={2}>
-        AI is thinking up some new content for this page, it may take a
-        second...
-      </Typography>
     </Box>
   );
 };

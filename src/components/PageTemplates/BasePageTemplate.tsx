@@ -1,7 +1,5 @@
 import {PropsWithChildren} from 'react';
-import MainNav from '@/components/Nav/MainNav';
 import {Box, Grid, Typography} from '@mui/material';
-import '@/components/PageTemplates/BasePageTemplate.module.scss';
 
 export default function BasePageTemplate({
   children,
@@ -10,16 +8,8 @@ export default function BasePageTemplate({
   return (
     <Box>
       <Grid container display={'flex'} justifyContent={'center'}>
-        <Grid item sm={6} xs={12}>
-          <Box
-            display={'flex'}
-            justifyContent={'center'}
-            flexDirection={'column'}
-            alignItems={'flex-start'}
-          >
-            <Typography variant="h1">Speaklore</Typography>
-            <MainNav onHomeClick={onHomeClick} />
-          </Box>
+        <Grid item xs={12} md={8}>
+          <Typography variant="h2">Infinite Personas</Typography>
           <Box
             mt={1.5}
             className="main"
