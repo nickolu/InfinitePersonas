@@ -14,7 +14,7 @@ function messageInputsToChatMessages(inputs: Message[]) {
     if (input.isUser) {
       return new HumanChatMessage(input.text);
     } else {
-      return new SystemChatMessage(input.text);
+      return new AIChatMessage(input.text);
     }
   });
 }
