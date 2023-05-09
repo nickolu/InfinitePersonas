@@ -3,7 +3,7 @@ import BasePageTemplate from '@/components/PageTemplates/BasePageTemplate';
 import SelectCharacter from '@/components/characters/SelectCharacter';
 import {useState} from 'react';
 import CharacterChat from '@/components/characters/CharacterChat';
-import {Character} from '@/core/Character';
+import Character from '@/core/Character';
 import {Box, Button} from '@mui/material';
 
 function HomePageContent() {

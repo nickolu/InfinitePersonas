@@ -1,11 +1,12 @@
-import {useEffect, useState} from 'react';
-import {Character} from '../../core/Character';
-import useCharacterChat from '../hooks/useCharacterChat';
-import useChatLog from '../hooks/useChatLog';
+import {useCallback, useState} from 'react';
 import {Box, Button, TextField, Typography} from '@mui/material';
-import PageLoadingSpinner from '../Loaders/PageLoadingSpinner';
+import Character from '@/core/Character';
 import Message from '@/core/Message';
-import AppearingText from '../util/AppearingText';
+import useCharacterChat from '@/components/hooks/useCharacterChat';
+import useChatLog from '@/components/hooks/useChatLog';
+import PageLoadingSpinner from '@/components/Loaders/PageLoadingSpinner';
+import AppearingText from '@/components/util/AppearingText';
+import useRateTruthfulness from '@/components/hooks/useRateTruthfulness';
 
 type CharacterChatProps = {
   character: Character;
@@ -13,11 +14,24 @@ type CharacterChatProps = {
 
 const CharacterChat = ({character}: CharacterChatProps) => {
   const [inputText, setInputText] = useState('');
+  const [truthfulnessRating, setTruthfulnessRating] = useState<number>(0);
   const {messages, addBotMessage, addUserMessage} = useChatLog();
   const {isLoading} = useCharacterChat({
     character,
     messages,
     onSuccess: addBotMessage,
+  });
+  const {isLoading: isRateTruthfulnessLoading} = useRateTruthfulness({
+    messages,
+    character,
+    onSuccess: useCallback((responseText) => {
+      try {
+        const truthfulnessRating = parseInt(responseText);
+        setTruthfulnessRating(truthfulnessRating);
+      } catch (e) {
+        console.error('truthfulness rating is not a number', e);
+      }
+    }, []),
   });
 
   return (
@@ -50,6 +64,9 @@ const CharacterChat = ({character}: CharacterChatProps) => {
         noValidate
         autoComplete="off"
         onSubmit={(e) => {
+          if (!inputText) {
+            return;
+          }
           e.preventDefault();
           addUserMessage(inputText);
           setInputText('');
@@ -73,6 +90,22 @@ const CharacterChat = ({character}: CharacterChatProps) => {
           </Button>
         </Box>
       </Box>
+      {isRateTruthfulnessLoading ? (
+        <Box mt={2}>
+          <Typography>Calculating truthfulness...</Typography>
+        </Box>
+      ) : (
+        <>
+          {truthfulnessRating < 4 && (
+            <Box mt={2}>
+              <Typography>
+                The last thing the AI told you might not be true. We rated its
+                truthfulness as a {truthfulnessRating}/5.
+              </Typography>
+            </Box>
+          )}
+        </>
+      )}
     </Box>
   );
 };

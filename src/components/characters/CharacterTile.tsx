@@ -1,5 +1,5 @@
 import {Box, Paper, Typography} from '@mui/material';
-import {Character} from '../../core/Character';
+import Character from '../../core/Character';
 import Tile from '../ui/Tile';
 
 type CharacterTileProps = {

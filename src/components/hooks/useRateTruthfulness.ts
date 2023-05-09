@@ -3,14 +3,11 @@ import {use, useEffect, useState} from 'react';
 import Character from '../../core/Character';
 import Message from '@/core/Message';
 
-async function getNextMessageFromChat(
-  messages: Message[],
-  character: Character
-) {
-  const apiUrl = `/api/LLM/characterChat`;
+async function getTruthfulnessRating(input: string, character: Character) {
+  const apiUrl = `/api/LLM/rateTruthfulness`;
 
   try {
-    const response = await axios.post(apiUrl, {params: {character, messages}});
+    const response = await axios.post(apiUrl, {params: {input, character}});
 
     return response.data;
   } catch (error) {
@@ -19,24 +16,24 @@ async function getNextMessageFromChat(
   }
 }
 
-export default function useCharacterChat({
-  character,
+export default function useRateTruthfulness({
   messages,
+  character,
   onSuccess,
 }: {
   messages: Message[];
-  onSuccess: (text: string) => void;
   character: Character;
+  onSuccess: (text: string) => void;
 }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const lastMessage = messages[messages.length - 1];
 
-    if (lastMessage?.isUser) {
+    if (lastMessage && !lastMessage?.isUser) {
       setIsLoading(true);
 
-      getNextMessageFromChat(messages, character)
+      getTruthfulnessRating(lastMessage.text, character)
         .then((response) => {
           setIsLoading(false);
           onSuccess(response.text);

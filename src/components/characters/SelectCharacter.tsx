@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {Box, Button, Grid, TextField, Typography} from '@mui/material';
-import {Character} from '@/core/Character';
+import Character from '@/core/Character';
 import Tile from '@/components/ui/Tile';
 import characterData from './characterData.json';
 import CharacterTile from './CharacterTile';
