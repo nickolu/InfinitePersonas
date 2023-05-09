@@ -96,11 +96,18 @@ const CharacterChat = ({character}: CharacterChatProps) => {
         </Box>
       ) : (
         <>
+          {truthfulnessRating === 0 && (
+            <Box mt={2}>
+              <Typography>
+                The last statement was not rated for truthfulness.
+              </Typography>
+            </Box>
+          )}
           {truthfulnessRating < 4 && (
             <Box mt={2}>
               <Typography>
-                The last thing the AI told you might not be true. We rated its
-                truthfulness as a {truthfulnessRating}/5.
+                The last thing the AI was rated {truthfulnessRating}/5 for
+                truthfulness.
               </Typography>
             </Box>
           )}
