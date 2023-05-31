@@ -16,7 +16,7 @@ const CharacterChat = ({character}: CharacterChatProps) => {
   const [inputText, setInputText] = useState('');
   const [truthfulnessRating, setTruthfulnessRating] = useState<number>(0);
   const {messages, addBotMessage, addUserMessage} = useChatLog();
-  const {isLoading, setWelcomeMessage} = useCharacterChat({
+  const {isLoading} = useCharacterChat({
     character,
     messages,
     onSuccess: addBotMessage,
