@@ -8,7 +8,7 @@ const Tile = ({
 }: BoxProps & {hoverColor?: string}) => {
   return (
     <Box
-      m={2}
+      m={1}
       sx={{
         cursor: 'pointer',
         ...sx,
@@ -17,9 +17,10 @@ const Tile = ({
     >
       <Paper>
         <Box
-          p={3}
+          p={2}
           sx={{
             border: '1px solid black',
+            minHeight: '200px',
             '&:hover': {
               backgroundColor: hoverColor,
             },

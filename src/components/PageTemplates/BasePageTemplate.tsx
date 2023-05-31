@@ -6,7 +6,7 @@ export default function BasePageTemplate({
   onHomeClick,
 }: PropsWithChildren<{onHomeClick?: () => void}>) {
   return (
-    <Box>
+    <Box maxWidth={'1200px'} margin={'0 auto'}>
       <Grid container display={'flex'} justifyContent={'center'}>
         <Grid item xs={12} md={8}>
           <Typography variant="h2">Infinite Personas</Typography>
