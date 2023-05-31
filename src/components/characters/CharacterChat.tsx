@@ -1,4 +1,4 @@
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {Box, Button, TextField, Typography} from '@mui/material';
 import Character from '@/core/Character';
 import Message from '@/core/Message';
@@ -16,7 +16,7 @@ const CharacterChat = ({character}: CharacterChatProps) => {
   const [inputText, setInputText] = useState('');
   const [truthfulnessRating, setTruthfulnessRating] = useState<number>(0);
   const {messages, addBotMessage, addUserMessage} = useChatLog();
-  const {isLoading} = useCharacterChat({
+  const {isLoading, setWelcomeMessage} = useCharacterChat({
     character,
     messages,
     onSuccess: addBotMessage,
@@ -90,29 +90,21 @@ const CharacterChat = ({character}: CharacterChatProps) => {
           </Button>
         </Box>
       </Box>
-      {isRateTruthfulnessLoading ? (
+      {isRateTruthfulnessLoading && (
         <Box mt={2}>
           <Typography>Calculating truthfulness...</Typography>
         </Box>
-      ) : (
-        <>
-          {truthfulnessRating === 0 && (
-            <Box mt={2}>
-              <Typography>
-                The last statement was not rated for truthfulness.
-              </Typography>
-            </Box>
-          )}
-          {truthfulnessRating < 4 && (
-            <Box mt={2}>
-              <Typography>
-                The last thing the AI was rated {truthfulnessRating}/5 for
-                truthfulness.
-              </Typography>
-            </Box>
-          )}
-        </>
       )}
+      {messages?.length > 0 &&
+        !messages[messages.length - 1].isUser &&
+        (truthfulnessRating > 0 ? (
+          <Box mt={2}>
+            <Typography>
+              The last message from the AI was rated {truthfulnessRating}/5 for
+              truthfulness.
+            </Typography>
+          </Box>
+        ) : null)}
     </Box>
   );
 };

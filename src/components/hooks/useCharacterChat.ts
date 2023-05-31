@@ -1,22 +1,46 @@
 import axios from 'axios';
-import {use, useEffect, useState} from 'react';
+import {use, useCallback, useEffect, useState} from 'react';
 import Character from '../../core/Character';
-import Message from '@/core/Message';
+import Message, {UserMessage} from '@/core/Message';
+import {get} from 'http';
+import {on} from 'events';
 
-async function getNextMessageFromChat(
+async function getNextChatMessage(
   messages: Message[],
   character: Character
-) {
+): Promise<{text: string}> {
   const apiUrl = `/api/LLM/characterChat`;
-
+  console.log('getting chat');
   try {
     const response = await axios.post(apiUrl, {params: {character, messages}});
-
+    console.log('response:', response);
     return response.data;
   } catch (error) {
+    console.error('error:', error);
     console.error(error);
     throw error;
   }
+}
+
+export function useWelcomeMessage(
+  character: Character,
+  onSuccess: (text: string) => void
+) {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    getNextChatMessage([new UserMessage('hello!')], character).then(
+      (response) => {
+        setIsLoading(false);
+        onSuccess(response.text);
+      }
+    );
+  }, [character, onSuccess]);
+
+  return {
+    isLoading,
+  };
 }
 
 export default function useCharacterChat({
@@ -28,6 +52,10 @@ export default function useCharacterChat({
   onSuccess: (text: string) => void;
   character: Character;
 }) {
+  const {isLoading: isWelcomeMessageLoading} = useWelcomeMessage(
+    character,
+    onSuccess
+  );
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -36,7 +64,7 @@ export default function useCharacterChat({
     if (lastMessage?.isUser) {
       setIsLoading(true);
 
-      getNextMessageFromChat(messages, character)
+      getNextChatMessage(messages, character)
         .then((response) => {
           setIsLoading(false);
           onSuccess(response.text);
@@ -49,6 +77,6 @@ export default function useCharacterChat({
   }, [messages, character, onSuccess]);
 
   return {
-    isLoading,
+    isLoading: isLoading || isWelcomeMessageLoading,
   };
 }

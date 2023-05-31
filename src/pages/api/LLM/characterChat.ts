@@ -34,10 +34,12 @@ export default function handler(
     ])
     .then((response) => {
       console.log('example res:', response);
-      res.status(200).json(response);
+      return res.status(200).json(response);
     })
     .catch((error) => {
       console.error(error);
-      res.status(200).json(new AIChatMessage('there was an error'));
+      return res.status(200).json(new AIChatMessage('there was an error'));
     });
+
+  return;
 }
