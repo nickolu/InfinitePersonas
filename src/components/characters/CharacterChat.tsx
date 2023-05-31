@@ -6,7 +6,8 @@ import useCharacterChat from '@/components/hooks/useCharacterChat';
 import useChatLog from '@/components/hooks/useChatLog';
 import PageLoadingSpinner from '@/components/Loaders/PageLoadingSpinner';
 import AppearingText from '@/components/util/AppearingText';
-import useRateTruthfulness from '@/components/hooks/useRateTruthfulness';
+import useRateCharacterTruthfulness from '@/components/hooks/useRateCharacterTruthfulness';
+import CharacterTruthMeter from './CharacterTruthMeter';
 
 type CharacterChatProps = {
   character: Character;
@@ -14,25 +15,18 @@ type CharacterChatProps = {
 
 const CharacterChat = ({character}: CharacterChatProps) => {
   const [inputText, setInputText] = useState('');
-  const [truthfulnessRating, setTruthfulnessRating] = useState<number>(0);
   const {messages, addBotMessage, addUserMessage} = useChatLog();
   const {isLoading} = useCharacterChat({
     character,
     messages,
     onSuccess: addBotMessage,
   });
-  const {isLoading: isRateTruthfulnessLoading} = useRateTruthfulness({
-    messages,
-    character,
-    onSuccess: useCallback((responseText) => {
-      try {
-        const truthfulnessRating = parseInt(responseText);
-        setTruthfulnessRating(truthfulnessRating);
-      } catch (e) {
-        console.error('truthfulness rating is not a number', e);
-      }
-    }, []),
-  });
+  const lastMessage = messages[messages.length - 1];
+  const {isLoading: isRateTruthfulnessLoading, truthfulnessRating} =
+    useRateCharacterTruthfulness({
+      message: lastMessage,
+      character,
+    });
 
   return (
     <Box>
@@ -64,6 +58,9 @@ const CharacterChat = ({character}: CharacterChatProps) => {
         noValidate
         autoComplete="off"
         onSubmit={(e) => {
+          if (isLoading) {
+            return;
+          }
           if (!inputText) {
             return;
           }
@@ -85,26 +82,17 @@ const CharacterChat = ({character}: CharacterChatProps) => {
               fullWidth
             />
           </Box>
-          <Button type="submit" variant="contained">
+          <Button disabled={isLoading} type="submit" variant="contained">
             Submit
           </Button>
         </Box>
       </Box>
-      {isRateTruthfulnessLoading && (
-        <Box mt={2}>
-          <Typography>Calculating truthfulness...</Typography>
-        </Box>
+      {lastMessage && !lastMessage?.isUser && (
+        <CharacterTruthMeter
+          message={messages[messages.length - 1]}
+          character={character}
+        />
       )}
-      {messages?.length > 0 &&
-        !messages[messages.length - 1].isUser &&
-        (truthfulnessRating > 0 ? (
-          <Box mt={2}>
-            <Typography>
-              The last message from the AI was rated {truthfulnessRating}/5 for
-              truthfulness.
-            </Typography>
-          </Box>
-        ) : null)}
     </Box>
   );
 };

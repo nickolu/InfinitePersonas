@@ -2,8 +2,6 @@ import axios from 'axios';
 import {use, useCallback, useEffect, useState} from 'react';
 import Character from '../../core/Character';
 import Message, {UserMessage} from '@/core/Message';
-import {get} from 'http';
-import {on} from 'events';
 
 async function getNextChatMessage(
   messages: Message[],

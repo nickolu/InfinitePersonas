@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {use, useEffect, useState} from 'react';
+import {use, useCallback, useEffect, useState} from 'react';
 import Character from '../../core/Character';
 import Message from '@/core/Message';
 
@@ -16,36 +16,34 @@ async function getTruthfulnessRating(input: string, character: Character) {
   }
 }
 
-export default function useRateTruthfulness({
-  messages,
+export default function useRateCharacterTruthfulness({
+  message,
   character,
-  onSuccess,
 }: {
-  messages: Message[];
+  message: Message;
   character: Character;
-  onSuccess: (text: string) => void;
 }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [truthfulnessRating, setTruthfulnessRating] = useState<number>(0);
 
   useEffect(() => {
-    const lastMessage = messages[messages.length - 1];
-
-    if (lastMessage && !lastMessage?.isUser) {
+    if (message && !message?.isUser) {
       setIsLoading(true);
 
-      getTruthfulnessRating(lastMessage.text, character)
+      getTruthfulnessRating(message.text, character)
         .then((response) => {
           setIsLoading(false);
-          onSuccess(response.text);
+          setTruthfulnessRating(Number(response.text));
         })
         .catch((error) => {
           console.error(error);
           setIsLoading(false);
         });
     }
-  }, [messages, character, onSuccess]);
+  }, [message, character]);
 
   return {
     isLoading,
+    truthfulnessRating,
   };
 }
