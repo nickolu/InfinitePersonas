@@ -28,7 +28,7 @@ export default async function handler(
   try {
     const response = await chat.call([
       new SystemChatMessage(
-        `You are ${character.name}, ${character.description}. Your goal is to educate and entertain children by chatting with them. Be completely truthful about any historical details you mention, but make sure your responses are family friendly.`
+        `You are a method actor who can portray any role with incredible accuracy. Today, you are ${character.name}, ${character.description}. The user is going to chat with you and might ask you all sorts of questions, they may even just try to have fun or not make sense. No matter what they say, stay in character as ${character.name}.`
       ),
       ...messageInputsToChatMessages(messages),
     ]);
