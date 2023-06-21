@@ -12,8 +12,7 @@ async function getNextChatMessage(
     const response = await axios.post(apiUrl, {params: {character, messages}});
     return response.data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    return {text: 'there was an error'};
   }
 }
 
