@@ -5,12 +5,12 @@ import {messageInputsToChatMessages} from '@/utils/llm';
 
 let timesCalled = 0;
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
   timesCalled++;
-  console.log('timesCalled:', timesCalled);
+
   const chat = new ChatOpenAI({
     temperature: 0.7,
     modelName: process.env.CHARACTER_CONVERSATION_GPT_MODEL,
@@ -25,21 +25,17 @@ export default function handler(
     return;
   }
 
-  chat
-    .call([
+  try {
+    const response = await chat.call([
       new SystemChatMessage(
         `You are ${character.name}, ${character.description}. Your goal is to educate and entertain children by chatting with them. Be completely truthful about any historical details you mention, but make sure your responses are family friendly.`
       ),
       ...messageInputsToChatMessages(messages),
-    ])
-    .then((response) => {
-      console.log('example res:', response);
-      return res.status(200).json(response);
-    })
-    .catch((error) => {
-      console.error(error);
-      return res.status(200).json(new AIChatMessage('there was an error'));
-    });
+    ]);
 
-  return;
+    return res.status(200).json(response);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json(new AIChatMessage('there was an error'));
+  }
 }

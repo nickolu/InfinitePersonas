@@ -8,12 +8,12 @@ import {
 
 let timesCalled = 0;
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
   timesCalled++;
-  console.log('timesCalled:', timesCalled);
+
   const chat = new ChatOpenAI({
     temperature: 0,
     modelName: process.env.RATE_TRUTHFULNESS_GPT_MODEL,
@@ -23,8 +23,8 @@ export default function handler(
     character: {name: 'an Erroring Robot'},
   };
 
-  chat
-    .call([
+  try {
+    const response = await chat.call([
       new SystemChatMessage(
         `Please rate how truthful the message from the user on a scale of 1 to 5, with 1 being not at all truthful and 5 being completely truthful. If the statement can't be evaluated for truthfulness, respond with "0". Respond only with a number.`
       ),
@@ -66,16 +66,12 @@ export default function handler(
         'Photosynthesis is the process by which plants, algae, and some bacteria convert light energy into chemical energy'
       ),
       new AIChatMessage('5'),
-      new SystemChatMessage(
-        `Please rate how truthful the message from the user on a scale of 1 to 5, with 1 being not at all truthful and 5 being completely truthful. If the statement can't be evaluated for truthfulness, respond with "0". Respond only with a number.`
-      ),
       new HumanChatMessage(`${character.name}: ${input}`),
-    ])
-    .then((response) => {
-      res.status(200).json(response);
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(200).json(new AIChatMessage('there was an error'));
-    });
+    ]);
+
+    res.status(200).json(response);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json(new AIChatMessage('there was an error'));
+  }
 }

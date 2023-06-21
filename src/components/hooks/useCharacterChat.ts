@@ -8,13 +8,10 @@ async function getNextChatMessage(
   character: Character
 ): Promise<{text: string}> {
   const apiUrl = `/api/LLM/characterChat`;
-  console.log('getting chat');
   try {
     const response = await axios.post(apiUrl, {params: {character, messages}});
-    console.log('response:', response);
     return response.data;
   } catch (error) {
-    console.error('error:', error);
     console.error(error);
     throw error;
   }

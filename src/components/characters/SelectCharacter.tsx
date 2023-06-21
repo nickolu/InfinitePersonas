@@ -66,7 +66,6 @@ const SelectCharacter = ({
           ) : (
             <CharacterTile
               onSelect={(character) => {
-                console.log('hello world');
                 setIsCustomCharacterFormOpen(true);
               }}
               character={{
