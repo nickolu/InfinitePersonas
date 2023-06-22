@@ -11,8 +11,12 @@ async function getNextChatMessage(
   try {
     const response = await axios.post(apiUrl, {params: {character, messages}});
     return response.data;
-  } catch (error) {
-    return {text: 'there was an error'};
+  } catch (error: any) {
+    console.log(error);
+    const errorMessage = error.message
+      ? error.message
+      : 'An unknown error occurred';
+    return {text: `Error: ${errorMessage}`};
   }
 }
 

@@ -21,8 +21,7 @@ export default async function handler(
   };
 
   if (!messages || !character) {
-    res.status(400).json(new AIChatMessage('error'));
-    return;
+    return res.status(400).json(new AIChatMessage('error'));
   }
 
   try {
@@ -35,7 +34,6 @@ export default async function handler(
 
     return res.status(200).json(response);
   } catch (error) {
-    console.error(error);
-    return res.status(500).json(new AIChatMessage('there was an error'));
+    return res.status(500).json(error);
   }
 }
