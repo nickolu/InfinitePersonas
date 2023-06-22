@@ -1,5 +1,11 @@
 import {useCallback, useEffect, useState} from 'react';
-import {Box, Button, TextField, Typography} from '@mui/material';
+import {
+  Box,
+  Button,
+  TextField,
+  TextareaAutosize,
+  Typography,
+} from '@mui/material';
 import Character from '@/core/Character';
 import Message from '@/core/Message';
 import useCharacterChat from '@/components/hooks/useCharacterChat';
@@ -58,28 +64,26 @@ const CharacterChat = ({character}: CharacterChatProps) => {
         noValidate
         autoComplete="off"
         onSubmit={(e) => {
+          e.preventDefault();
           if (isLoading) {
             return;
           }
           if (!inputText) {
             return;
           }
-          e.preventDefault();
           addUserMessage(inputText);
           setInputText('');
         }}
       >
         <Box display="flex" mt={3}>
-          <Box flexGrow={1} width="100%">
-            <TextField
+          <Box flexGrow={1} width="100%" pr={3}>
+            <TextareaAutosize
               id="outlined-basic"
-              label="Message"
-              variant="outlined"
+              style={{width: '100%', minHeight: '50px'}}
               onChange={(e) => {
                 setInputText(e.target.value);
               }}
               value={inputText}
-              fullWidth
             />
           </Box>
           <Button disabled={isLoading} type="submit" variant="contained">
