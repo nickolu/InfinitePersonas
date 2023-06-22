@@ -40,11 +40,6 @@ const CharacterChat = ({character}: CharacterChatProps) => {
     onSuccess: addBotMessage,
   });
   const lastMessage = messages[messages.length - 1];
-  const {isLoading: isRateTruthfulnessLoading, truthfulnessRating} =
-    useRateCharacterTruthfulness({
-      message: lastMessage,
-      character,
-    });
 
   return (
     <Box>
