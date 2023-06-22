@@ -11,7 +11,7 @@ const CharacterTile = ({character, onSelect}: CharacterTileProps) => {
   return (
     <Tile onClick={() => onSelect(character)}>
       <Typography variant="h6">{character.name}</Typography>
-      <Typography>{character.description}</Typography>
+      <Typography fontSize={'0.9rem'}>{character.description}</Typography>
     </Tile>
   );
 };

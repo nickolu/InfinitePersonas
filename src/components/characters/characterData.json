@@ -1,7 +1,51 @@
 {
     "albert_einstein": {
         "name": "Albert Einstein",
-        "description": "German-born theoretical physicist"
+        "description": "An influential theoretical physicist who developed the theory of relativity, fundamentally shifting our understanding of space, time, and energy."
+    },
+    "harriet_tubman": {
+        "name": "Harriet Tubman",
+        "description": "An African American abolitionist and political activist who led hundreds of enslaved people to freedom via the Underground Railroad."
+    },
+    "nikola_tesla": {
+        "name": "Nikola Tesla",
+        "description": "A Serbian-American inventor and engineer who significantly contributed to the development of alternating current electrical systems, envisioned wireless communication, and held over 300 patents."
+    },
+    "frida_kahlo": {
+        "name": "Frida Kahlo",
+        "description": "A Mexican artist known for her surrealist and symbolic self-portraits and works that explored identity, gender, class, and race in Mexican society."
+    },
+    "confucius": {
+        "name": "Confucius",
+        "description": "An ancient Chinese philosopher whose teachings formed the basis of many aspects of East Asian culture and philosophy, emphasizing personal and governmental morality, correctness of social relationships, and justice."
+    },
+    "amelia_earhart": {
+        "name": "Amelia Earhart",
+        "description": "An American aviation pioneer and author, she was the first female aviator to fly solo across the Atlantic Ocean, symbolizing the expanding roles of women in the early 20th century."
+    },
+    "mahatma_gandhi": {
+        "name": "Mahatma Gandhi",
+        "description": "Leader of Indian nationalism in British-ruled India, who employed nonviolent resistance to lead India to independence and inspired civil rights movements worldwide."
+    },
+    "ada_lovelace": {
+        "name": "Ada Lovelace",
+        "description": "An English mathematician and writer who is recognized for her work on Charles Babbage's early mechanical general-purpose computer, the Analytical Engine, and is often regarded as the first computer programmer."
+    },
+    "virginia_woolf": {
+        "name": "Virginia Woolf",
+        "description": "An English writer and one of the foremost modernists of the twentieth century, Woolf's works have significantly influenced feminist criticism and she is celebrated for her innovative narrative techniques."
+    },
+    "nelson_mandela": {
+        "name": "Nelson Mandela",
+        "description": "An anti-apartheid revolutionary, political leader, and philanthropist, who served as President of South Africa, and whose leadership, resilience, and advocacy for equality and justice transformed his nation."
+    },
+    "zora_neale_hurston": {
+        "name": "Zora Neale Hurston",
+        "description": "An American author, anthropologist, and filmmaker, who portrayed racial struggles in the early-20th-century American South and published research on Haitian voodoo."
+    },
+    "carl_sagan": {
+        "name": "Carl Sagan",
+        "description": "An American astronomer, planetary scientist, cosmologist, astrophysicist, astrobiologist, author, and science communicator known for his research in extraterrestrial life, and for popularizing science to the public."
     },
     "cleopatra": {
         "name": "Cleopatra",
@@ -39,9 +83,9 @@
         "name": "Charles Darwin",
         "description": "English naturalist, geologist and biologist"
     },
-    "frida_kahlo": {
-        "name": "Frida Kahlo",
-        "description": "Mexican painter known for her many portraits, self-portraits, and works inspired by the nature and artifacts of Mexico"
+    "maya_angelou": {
+        "name": "Maya Angelou",
+        "description": "An American poet, memoirist, and civil rights activist, she is best known for her series of seven autobiographies, which focus on her childhood and early adult experiences, the first and most famous of which is 'I Know Why the Caged Bird Sings'."
     },
     "leonardo_da_vinci": {
         "name": "Leonardo da Vinci",

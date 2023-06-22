@@ -13,6 +13,24 @@ type CharacterChatProps = {
   character: Character;
 };
 
+const UserMessage = ({message}: {message: Message}) => {
+  return (
+    <Box className="user">
+      <Typography>{message.text}</Typography>
+    </Box>
+  );
+};
+
+const BotMessage = ({message}: {message: Message}) => {
+  return (
+    <Box className="bot">
+      <Typography>
+        <AppearingText>{message.text}</AppearingText>
+      </Typography>
+    </Box>
+  );
+};
+
 const CharacterChat = ({character}: CharacterChatProps) => {
   const [inputText, setInputText] = useState('');
   const {messages, addBotMessage, addUserMessage} = useChatLog();
@@ -38,13 +56,10 @@ const CharacterChat = ({character}: CharacterChatProps) => {
       {messages && messages?.length > 0 && (
         <Box>
           {messages.map((message: Message) => {
-            return (
-              <Box key={message.id} className={message.isUser ? 'user' : 'bot'}>
-                <Typography>
-                  <AppearingText>{message.text}</AppearingText>
-                </Typography>
-              </Box>
-            );
+            if (message.isUser) {
+              return <UserMessage key={message.id} message={message} />;
+            }
+            return <BotMessage key={message.id} message={message} />;
           })}
         </Box>
       )}
