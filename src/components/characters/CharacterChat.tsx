@@ -1,11 +1,5 @@
 import {useCallback, useEffect, useState} from 'react';
-import {
-  Box,
-  Button,
-  TextField,
-  TextareaAutosize,
-  Typography,
-} from '@mui/material';
+import {Box, Button, TextField, Typography} from '@mui/material';
 import Character from '@/core/Character';
 import Message from '@/core/Message';
 import useCharacterChat from '@/components/hooks/useCharacterChat';
@@ -76,14 +70,17 @@ const CharacterChat = ({character}: CharacterChatProps) => {
         }}
       >
         <Box display="flex" mt={3}>
-          <Box flexGrow={1} width="100%" pr={3}>
-            <TextareaAutosize
-              id="outlined-basic"
-              style={{width: '100%', minHeight: '50px'}}
+          <Box flexGrow={1} width="100%">
+            <TextField
+              id="character-chat-input"
+              label="Message"
+              variant="outlined"
+              rows={4}
               onChange={(e) => {
                 setInputText(e.target.value);
               }}
               value={inputText}
+              fullWidth
             />
           </Box>
           <Button disabled={isLoading} type="submit" variant="contained">
