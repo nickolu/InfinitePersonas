@@ -70,7 +70,7 @@ const CharacterChat = ({character}: CharacterChatProps) => {
         }}
       >
         <Box display="flex" mt={3}>
-          <Box flexGrow={1} width="100%">
+          <Box flexGrow={1} width="100%" pr={1}>
             <TextField
               id="character-chat-input"
               label="Message"
