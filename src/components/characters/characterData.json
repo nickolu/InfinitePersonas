@@ -2,127 +2,102 @@
     "abraham_lincoln": {
         "name": "Abraham Lincoln",
         "description": "16th President of the United States",
-        "category": "historical"
+        "category": "leader"
     },
     "ada_lovelace": {
         "name": "Ada Lovelace",
         "description": "Mathematician often recognized as the first computer programmer.",
-        "category": "historical"
+        "category": "science"
     },
     "albert_einstein": {
         "name": "Albert Einstein",
         "description": "Theoretical physicist known for developing the theory of relativity.",
-        "category": "historical"
+        "category": "science"
     },
     "amelia_earhart": {
         "name": "Amelia Earhart",
         "description": "First female aviator to fly solo across the Atlantic Ocean.",
-        "category": "historical"
+        "category": "hero"
     },
     "carl_sagan": {
         "name": "Carl Sagan",
         "description": "Astronomer and science communicator known for research in extraterrestrial life.",
-        "category": "historical"
+        "category": "science"
     },
     "cleopatra": {
         "name": "Cleopatra",
         "description": "Last active ruler of the Ptolemaic Kingdom of Egypt",
-        "category": "historical"
+        "category": "leader"
     },
     "confucius": {
         "name": "Confucius",
         "description": "Ancient philosopher who significantly influenced East Asian culture and philosophy.",
-        "category": "historical"
+        "category": "wisdom"
     },
     "frida_kahlo": {
         "name": "Frida Kahlo",
         "description": "Mexican artist renowned for her symbolic self-portraits.",
-        "category": "historical"
+        "category": "art"
     },
     "george_washington": {
         "name": "George Washington",
         "description": "1st President of the United States",
-        "category": "historical"
+        "category": "leader"
     },
     "harriet_tubman": {
         "name": "Harriet Tubman",
         "description": "Abolitionist who led hundreds of enslaved people to freedom.",
-        "category": "historical"
+        "category": "hero"
     },
     "isaac_newton": {
         "name": "Isaac Newton",
         "description": "Scientist known for his influential contributions to physics, including his laws of motion.",
-        "category": "historical"
+        "category": "science"
     },
     "julius_caesar": {
         "name": "Julius Caesar",
         "description": "Roman politician and general",
-        "category": "historical"
+        "category": "leader"
     },
     "leonardo_da_vinci": {
         "name": "Leonardo da Vinci",
         "description": "High Renaissance polymath known for his diverse contributions to multiple fields.",
-        "category": "historical"
+        "category": "science"
     },
     "louis_pasteur": {
         "name": "Louis Pasteur",
         "description": "French biologist, microbiologist and chemist renowned for his discoveries of the principles of vaccination, microbial fermentation and pasteurization",
-        "category": "historical"
+        "category": "science"
     },
     "mahatma_gandhi": {
         "name": "Mahatma Gandhi",
         "description": "Leader of Indian nationalism who employed nonviolent resistance for independence.",
-        "category": "historical"
+        "category": "leader"
     },
     "marie_curie": {
         "name": "Marie Curie",
         "description": "Physicist and chemist known for pioneering research on radioactivity.",
-        "category": "historical"
+        "category": "science"
     },
     "maya_angelou": {
         "name": "Maya Angelou",
         "description": "An American poet, memoirist, and civil rights activist, she is best known for her series of seven autobiographies, which focus on her childhood and early adult experiences, the first and most famous of which is 'I Know Why the Caged Bird Sings'.",
-        "category": "historical"
+        "category": "art"
     },
     "nelson_mandela": {
         "name": "Nelson Mandela",
         "description": "Anti-apartheid revolutionary, political leader, and former President of South Africa.",
-        "category": "historical"
+        "category": "leader"
     },
     "nikola_tesla": {
         "name": "Nikola Tesla",
         "description": "Inventor and engineer who greatly contributed to the development of electrical systems.",
-        "category": "historical"
+        "category": "science"
     },
     "queen_victoria": {
         "name": "Queen Victoria",
         "description": "Queen of the United Kingdom of Great Britain and Ireland from 1837 until her death",
-        "category": "historical"
-    },
-    "virginia_woolf": {
-        "name": "Virginia Woolf",
-        "description": "Influential English writer and modernist of the 20th century.",
-        "category": "historical"
-    },
-    "zora_neale_hurston": {
-        "name": "Zora Neale Hurston",
-        "description": "American author who portrayed racial struggles in the early-20th-century South.",
-        "category": "historical"
-    },
-    "the_easter_bunny": {
-        "name": "The Easter Bunny",
-        "description": "A folkloric figure and symbol of Easter, depicted as a rabbit bringing Easter eggs",
-        "category": "fictional"
-    },
-    "the_tooth_fairy": {
-        "name": "The Tooth Fairy",
-        "description": "A fantasy figure of early childhood in Western and Western-influenced cultures",
-        "category": "fictional"
-    },
-    "santa_claus": {
-        "name": "Santa Claus",
-        "description": "A legendary figure originating in Western Christian culture who is said to bring gifts to the homes of well-behaved children on the night of Christmas Eve",
-        "category": "fictional"
+        "category": "leader"
     },
     "robin_hood": {
         "name": "Robin Hood",
@@ -182,6 +157,166 @@
     "don_quixote": {
         "name": "Don Quixote",
         "description": "The main character in Miguel de Cervantes' novel 'Don Quixote,' a middle-aged man who sets out on a quest to revive chivalry and battle imaginary foes",
+        "category": "fictional"
+    },
+    "dorothy_gale": {
+        "name": "Dorothy Gale",
+        "description": "The main character in many of the Oz novels by L. Frank Baum, best known from 'The Wonderful Wizard of Oz'.",
+        "category": "fictional"
+    },
+    "charles_darwin": {
+        "name": "Charles Darwin",
+        "description": "English naturalist, geologist and biologist, best known for his contributions to the science of evolution.",
+        "category": "science"
+    },
+    "winston_churchill": {
+        "name": "Winston Churchill",
+        "description": "British statesman, army officer, and writer who served as Prime Minister of the United Kingdom during the Second World War.",
+        "category": "leader"
+    },
+    "martin_luther_king_jr": {
+        "name": "Martin Luther King Jr.",
+        "description": "American Christian minister and activist who became the most visible spokesperson and leader in the Civil Rights Movement from 1955 until his assassination in 1968.",
+        "category": "hero"
+    },
+    "joan_of_arc": {
+        "name": "Joan of Arc",
+        "description": "Nicknamed 'The Maid of Orléans', she is considered a heroine of France for her role during the Lancastrian phase of the Hundred Years' War.",
+        "category": "hero"
+    },
+    "beethoven": {
+        "name": "Ludwig van Beethoven",
+        "description": "German composer and pianist whose music is amongst the most performed of the classical music repertoire.",
+        "category": "art"
+    },
+    "hercules": {
+        "name": "Hercules",
+        "description": "A divine hero in Greek mythology, the son of Zeus and the mortal Alcmene.",
+        "category": "fictional"
+    },
+    "frodo_baggins": {
+        "name": "Frodo Baggins",
+        "description": "A main character in J. R. R. Tolkien's 'The Lord of the Rings' who carries the One Ring to Mount Doom.",
+        "category": "fictional"
+    },
+    "luke_skywalker": {
+        "name": "Luke Skywalker",
+        "description": "A key figure in the Star Wars universe, trained by Obi-Wan Kenobi and Yoda to become a Jedi and defeat the Galactic Empire.",
+        "category": "fictional"
+    },
+    "elizabeth_bennet": {
+        "name": "Elizabeth Bennet",
+        "description": "The protagonist in Jane Austen's 1813 novel 'Pride and Prejudice'.",
+        "category": "fictional"
+    },
+    "darcy": {
+        "name": "Fitzwilliam Darcy",
+        "description": "One of the two central characters in Jane Austen's 1813 novel 'Pride and Prejudice'.",
+        "category": "fictional"
+    },
+    "huckleberry_finn": {
+        "name": "Huckleberry Finn",
+        "description": "The protagonist and narrator of novels 'The Adventures of Tom Sawyer' and 'Adventures of Huckleberry Finn', by Mark Twain.",
+        "category": "fictional"
+    },
+    "romeo_juliet": {
+        "name": "Romeo and Juliet",
+        "description": "The title characters in William Shakespeare's tragedy who fall in love despite their feuding families.",
+        "category": "fictional"
+    },
+    "tarzan": {
+        "name": "Tarzan",
+        "description": "A fictional character, an archetypal feral child raised in the African jungle by the Mangani great apes; he later experiences civilization only to reject it and return to the wild as a heroic adventurer.",
+        "category": "fictional"
+    },
+    "thomas_jefferson": {
+        "name": "Thomas Jefferson",
+        "description": "American statesman, diplomat, lawyer, architect, philosopher, and Founding Father who served as the third president of the United States from 1801 to 1809.",
+        "category": "leader"
+    },
+    "florence_nightingale": {
+        "name": "Florence Nightingale",
+        "description": "British nurse, social reformer and statistician known as the founder of modern nursing.",
+        "category": "hero"
+    },
+    "william_shakespeare": {
+        "name": "William Shakespeare",
+        "description": "English playwright, poet, and actor, widely regarded as the greatest writer in the English language and the world's greatest dramatist.",
+        "category": "art"
+    },
+    "picasso": {
+        "name": "Pablo Picasso",
+        "description": "Spanish painter, sculptor, printmaker, ceramicist, and theatre designer who spent most of his adult life in France and is regarded as one of the most influential artists of the 20th century.",
+        "category": "art"
+    },
+    "charlie_chaplin": {
+        "name": "Charlie Chaplin",
+        "description": "English comic actor, filmmaker, and composer who rose to fame in the era of silent film and is best known for his character 'The Tramp'.",
+        "category": "art"
+    },
+    "susan_b_anthony": {
+        "name": "Susan B. Anthony",
+        "description": "American social reformer and women's rights activist who played a pivotal role in the women's suffrage movement.",
+        "category": "hero"
+    },
+    "walt_disney": {
+        "name": "Walt Disney",
+        "description": "American entrepreneur, animator, writer, voice actor and film producer who co-founded The Walt Disney Company.",
+        "category": "art"
+    },
+    "neil_armstrong": {
+        "name": "Neil Armstrong",
+        "description": "American astronaut and aeronautical engineer, and the first person to walk on the Moon.",
+        "category": "hero"
+    },
+    "muhammad_ali": {
+        "name": "Muhammad Ali",
+        "description": "American professional boxer, activist, and philanthropist, widely regarded as one of the most significant and celebrated sports figures of the 20th century.",
+        "category": "hero"
+    },
+    "bilbo_baggins": {
+        "name": "Bilbo Baggins",
+        "description": "The protagonist of J. R. R. Tolkien's 'The Hobbit', Bilbo is a hobbit who is coerced into going on an adventure to reclaim the kingdom of Erebor from the dragon Smaug.",
+        "category": "fictional"
+    },
+    "heathcliff": {
+        "name": "Heathcliff",
+        "description": "A character in Emily Bronte's 'Wuthering Heights', Heathcliff is a passionate and vengeful man who endures a torturous love for Catherine Earnshaw.",
+        "category": "fictional"
+    },
+    "nancy_drew": {
+        "name": "Nancy Drew",
+        "description": "The title character in a mystery series created by publisher Edward Stratemeyer, Nancy is a teenage detective who solves mysteries with her friends.",
+        "category": "fictional"
+    },
+    "vito_corleone": {
+        "name": "Vito Corleone",
+        "description": "The patriarch of the Corleone family in Mario Puzo's 'The Godfather', Vito is an Italian immigrant who builds a mafia empire.",
+        "category": "fictional"
+    },
+    "hamlet": {
+        "name": "Hamlet",
+        "description": "The Prince of Denmark, the title character, and the protagonist in Shakespeare's play 'Hamlet'. He struggles with the moral legitimacy of revenge, his own sanity, and the authenticity of his mother’s and friends’ seeming betrayal.",
+        "category": "fictional"
+    },
+    "scarlett_o_hara": {
+        "name": "Scarlett O'Hara",
+        "description": "The protagonist in Margaret Mitchell's 'Gone With the Wind', Scarlett is a Southern belle who survives the Civil War and Reconstruction.",
+        "category": "fictional"
+    },
+    "jay_gatsby": {
+        "name": "Jay Gatsby",
+        "description": "The title character of F. Scott Fitzgerald's 'The Great Gatsby', Gatsby is a millionaire and a man of mystery with a shady past and a love for Daisy Buchanan.",
+        "category": "fictional"
+    },
+    "winnie_the_pooh": {
+        "name": "Winnie the Pooh",
+        "description": "A character in A. A. Milne's 'Winnie-the-Pooh' series, Winnie the Pooh is a loveable bear known for his love of honey and his simple, but profound, wisdom.",
+        "category": "fictional"
+    },
+    "holden_caulfield": {
+        "name": "Holden Caulfield",
+        "description": "The protagonist of J.D. Salinger's 'The Catcher in the Rye', Holden is a teenager who navigates the challenges of adolescence and alienation.",
         "category": "fictional"
     }
 }

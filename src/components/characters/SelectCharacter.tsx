@@ -31,20 +31,6 @@ const SelectCharacter = ({
   return (
     <Box>
       <Typography variant="h1">Select Character</Typography>
-      <Box
-        display="flex"
-        justifyContent={'flex-end'}
-        alignItems={'center'}
-        mr={1}
-      >
-        Sort:{' '}
-        <Box ml={1}>
-          <SelectableButtonGroup
-            options={sortOptions}
-            onSelection={setSortBy}
-          />
-        </Box>
-      </Box>
 
       <Grid container spacing={1}>
         <Grid item sm={12}>
@@ -98,7 +84,22 @@ const SelectCharacter = ({
               }}
             />
           )}
+          <Box
+            display="flex"
+            justifyContent={'flex-end'}
+            alignItems={'center'}
+            mr={1}
+          >
+            Sort:{' '}
+            <Box ml={1}>
+              <SelectableButtonGroup
+                options={sortOptions}
+                onSelection={setSortBy}
+              />
+            </Box>
+          </Box>
         </Grid>
+
         {Object.keys(sortedCharacterData).map((key: string) => {
           const character: Character = sortedCharacterData[key];
           return (
