@@ -3,14 +3,17 @@ import {ChatOpenAI} from 'langchain/chat_models/openai';
 import {AIChatMessage, SystemChatMessage} from 'langchain/schema';
 import {messageInputsToChatMessages} from '@/utils/llm';
 
-let timesCalled = 0;
+const MAX_RETRIES = 3;
+const DELAY_MS = 1000;
+
+function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  timesCalled++;
-
   const chat = new ChatOpenAI({
     temperature: 0.7,
     modelName: process.env.CHARACTER_CONVERSATION_GPT_MODEL,
@@ -24,16 +27,22 @@ export default async function handler(
     return res.status(400).json(new AIChatMessage('error'));
   }
 
-  try {
-    const response = await chat.call([
-      new SystemChatMessage(
-        `You are a method actor who can portray any role with incredible accuracy. Today, you are ${character.name}, ${character.description}. The user is going to chat with you and might ask you all sorts of questions, they may even just try to have fun or not make sense. No matter what they say, stay in character as ${character.name}.`
-      ),
-      ...messageInputsToChatMessages(messages),
-    ]);
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      const response = await chat.call([
+        new SystemChatMessage(
+          `You are a method actor who can portray any role with incredible accuracy. Today, you are ${character.name}, ${character.description}. The user is going to chat with you and might ask you all sorts of questions, they may even just try to have fun or not make sense. No matter what they say, stay in character as ${character.name}.`
+        ),
+        ...messageInputsToChatMessages(messages),
+      ]);
 
-    return res.status(200).json(response);
-  } catch (error) {
-    return res.status(500).json(JSON.stringify(error));
+      return res.status(200).json(response);
+    } catch (error) {
+      if (attempt === MAX_RETRIES) {
+        return res.status(500).json(JSON.stringify(error));
+      }
+
+      await delay(DELAY_MS);
+    }
   }
 }
