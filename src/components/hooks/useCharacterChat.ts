@@ -99,25 +99,22 @@ export default function useCharacterChat({
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    const lastMessage = messages[messages.length - 1];
+  const generateResponse = useCallback(() => {
+    setIsLoading(true);
 
-    if (lastMessage?.isUser) {
-      setIsLoading(true);
-
-      getNextChatMessage(messages, character)
-        .then((response) => {
-          setIsLoading(false);
-          onSuccess(response.text);
-        })
-        .catch((error) => {
-          console.error(error);
-          setIsLoading(false);
-        });
-    }
+    getNextChatMessage(messages, character)
+      .then((response) => {
+        setIsLoading(false);
+        onSuccess(response.text);
+      })
+      .catch((error) => {
+        console.error(error);
+        setIsLoading(false);
+      });
   }, [messages, character, onSuccess]);
 
   return {
     isLoading: isLoading || isWelcomeMessageLoading,
+    generateResponse,
   };
 }

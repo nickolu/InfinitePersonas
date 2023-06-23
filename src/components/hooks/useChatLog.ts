@@ -1,8 +1,9 @@
 import Message, {BotMessage, SystemMessage, UserMessage} from '@/core/Message';
-import {useState, useCallback} from 'react';
+import {useState, useCallback, useEffect} from 'react';
 
 const useChatLog = () => {
   const [messages, setMessages] = useState<Message[]>([]);
+  const [numberOfRemovals, setNumberOfRemovals] = useState<number>(0);
 
   const addUserMessage = useCallback((message: string) => {
     setMessages((messages) => {
@@ -31,7 +32,24 @@ const useChatLog = () => {
     });
   }, []);
 
-  return {messages, addUserMessage, addBotMessage, addSystemMessage};
+  const removeLastMessage = useCallback(() => {
+    setNumberOfRemovals((numberOfRemovals) => numberOfRemovals + 1);
+    setMessages((messages) => {
+      if (!messages) {
+        return [];
+      }
+      return messages.slice(0, -1);
+    });
+  }, []);
+
+  return {
+    messages,
+    addUserMessage,
+    addBotMessage,
+    addSystemMessage,
+    removeLastMessage,
+    numberOfRemovals,
+  };
 };
 
 export default useChatLog;

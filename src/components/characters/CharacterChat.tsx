@@ -8,6 +8,7 @@ import PageLoadingSpinner from '@/components/Loaders/PageLoadingSpinner';
 import AppearingText from '@/components/util/AppearingText';
 import useRateCharacterTruthfulness from '@/components/hooks/useRateCharacterTruthfulness';
 import CharacterTruthMeter from './CharacterTruthMeter';
+import {Autorenew} from '@mui/icons-material';
 
 type CharacterChatProps = {
   character: Character;
@@ -33,13 +34,20 @@ const BotMessage = ({message}: {message: Message}) => {
 
 const CharacterChat = ({character}: CharacterChatProps) => {
   const [inputText, setInputText] = useState('');
-  const {messages, addBotMessage, addUserMessage} = useChatLog();
-  const {isLoading} = useCharacterChat({
+  const {messages, addBotMessage, addUserMessage, removeLastMessage} =
+    useChatLog();
+  const {isLoading, generateResponse} = useCharacterChat({
     character,
     messages,
     onSuccess: addBotMessage,
   });
   const lastMessage = messages[messages.length - 1];
+
+  useEffect(() => {
+    if (lastMessage && lastMessage.isUser) {
+      generateResponse();
+    }
+  }, [lastMessage, generateResponse]);
 
   return (
     <Box>
@@ -56,6 +64,20 @@ const CharacterChat = ({character}: CharacterChatProps) => {
             }
             return <BotMessage key={message.id} message={message} />;
           })}
+          {lastMessage && !lastMessage?.isUser && messages.length > 1 && (
+            <Button
+              onClick={() => {
+                removeLastMessage();
+              }}
+              sx={{
+                padding: 0,
+                minWidth: '44px',
+                minHeight: '44px',
+              }}
+            >
+              <Autorenew />
+            </Button>
+          )}
         </Box>
       )}
       {isLoading && (
