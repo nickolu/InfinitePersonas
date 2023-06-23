@@ -38,7 +38,12 @@ export default async function handler(
 
       return res.status(200).json(response);
     } catch (error) {
+      console.error('failed to get chat response, retrying', error);
       if (attempt === MAX_RETRIES) {
+        console.error(
+          'failed to get chat response, max retries exceeded',
+          error
+        );
         return res.status(500).json(JSON.stringify(error));
       }
 
