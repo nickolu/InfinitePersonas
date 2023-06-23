@@ -1,9 +1,13 @@
-import {useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {Box, Button, Grid, TextField, Typography} from '@mui/material';
 import Character from '@/core/Character';
 import Tile from '@/components/ui/Tile';
 import characterData from './characterData.json';
 import CharacterTile from './CharacterTile';
+import SelectableButtonGroup from '@/components/ui/SelectableButtonGroup';
+import useCharacterSort, {
+  sortOptions,
+} from '@/components/hooks/useCharacterSort';
 
 type SelectCharacterProps = {
   selectedCharacter: Character | null;
@@ -14,16 +18,34 @@ const SelectCharacter = ({
   selectedCharacter,
   setSelectedCharacter,
 }: SelectCharacterProps) => {
-  let data = characterData as Record<string, Character>;
   const [isCustomCharacterFormOpen, setIsCustomCharacterFormOpen] =
     useState(false);
   const [customCharacterName, setCustomCharacterName] = useState('');
   const [customCharacterDescription, setCustomCharacterDescription] =
     useState('');
 
+  const {setSortBy, sortedCharacterData} = useCharacterSort({
+    characterData,
+  });
+
   return (
     <Box>
       <Typography variant="h1">Select Character</Typography>
+      <Box
+        display="flex"
+        justifyContent={'flex-end'}
+        alignItems={'center'}
+        mr={1}
+      >
+        Sort:{' '}
+        <Box ml={1}>
+          <SelectableButtonGroup
+            options={sortOptions}
+            onSelection={setSortBy}
+          />
+        </Box>
+      </Box>
+
       <Grid container spacing={1}>
         <Grid item sm={12}>
           {isCustomCharacterFormOpen ? (
@@ -35,6 +57,7 @@ const SelectCharacter = ({
                   setSelectedCharacter({
                     name: customCharacterName,
                     description: customCharacterDescription,
+                    category: 'custom',
                   });
                 }}
               >
@@ -71,12 +94,13 @@ const SelectCharacter = ({
               character={{
                 name: 'Custom Character',
                 description: 'Chat with any character you can imagine!',
+                category: 'custom',
               }}
             />
           )}
         </Grid>
-        {Object.keys(characterData).map((key: string) => {
-          const character: Character = data[key];
+        {Object.keys(sortedCharacterData).map((key: string) => {
+          const character: Character = sortedCharacterData[key];
           return (
             <Grid item key={key} sm={4}>
               <CharacterTile
