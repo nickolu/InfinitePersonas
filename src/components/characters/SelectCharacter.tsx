@@ -38,6 +38,9 @@ const SelectCharacter = ({
             <Tile hoverColor="white">
               <Box
                 component="form"
+                display={'flex'}
+                flexDirection={'column'}
+                alignItems={'flex-end'}
                 onSubmit={(e) => {
                   e.preventDefault();
                   setSelectedCharacter({
@@ -69,7 +72,11 @@ const SelectCharacter = ({
                     setCustomCharacterDescription(e.target.value);
                   }}
                 />
-                <Button type="submit">Chat</Button>
+                <Box mt={1}>
+                  <Button type="submit" variant="outlined">
+                    Chat
+                  </Button>
+                </Box>
               </Box>
             </Tile>
           ) : (
