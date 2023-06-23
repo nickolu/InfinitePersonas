@@ -44,6 +44,16 @@ const CharacterTile = ({character, onSelect}: CharacterTileProps) => {
           <Typography variant="h6">{character.name}</Typography>
           <Typography fontSize={'0.9rem'}>{character.description}</Typography>
         </Box>
+        <Box>
+          {character.category !== 'custom' && (
+            <Typography variant="caption" sx={{color: 'grey'}}>
+              category:{' '}
+              <Typography component="span" variant="caption">
+                {character.category}
+              </Typography>
+            </Typography>
+          )}
+        </Box>
       </Box>
     </Tile>
   );
