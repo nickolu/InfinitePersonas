@@ -8,6 +8,22 @@ import {
 
 let timesCalled = 0;
 
+function human1(text: string) {
+  const human1 = new HumanChatMessage(
+    text
+  );
+  human1.name = 'user1';
+  return human1;
+}
+
+function human2(text: string) {
+  const human2 = new HumanChatMessage(
+    text
+  );
+  human2.name = 'user2';
+  return human2;
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
@@ -18,8 +34,10 @@ export default async function handler(
     temperature: 0,
     modelName: process.env.RATE_TRUTHFULNESS_GPT_MODEL,
   });
-  const {input, character} = req?.body?.params || {
+  const {input, input1, input2, character} = req?.body?.params || {
     input: '',
+    input1: '',
+    input2: '',
     character: {name: 'an Erroring Robot'},
   };
 
@@ -28,50 +46,25 @@ export default async function handler(
       new SystemChatMessage(
         `Please rate how truthful the message from the user on a scale of 1 to 5, with 1 being not at all truthful and 5 being completely truthful. If the statement can't be evaluated for truthfulness, respond with "0". Respond only with a number.`
       ),
-      new HumanChatMessage(
-        'Water boils at 100 degrees Celsius (212 degrees Fahrenheit) at sea level and standard atmospheric pressure.'
-      ),
+      human1('What shape is the Earth?'),
+      human2('The Earth is a spherical planet'),
       new AIChatMessage('5'),
-      new HumanChatMessage('All deserts are hot and sandy'),
-      new AIChatMessage('2'),
-      new HumanChatMessage('Elephants are the largest land animals on Earth'),
-      new AIChatMessage('4'),
-      new HumanChatMessage('Pigs can fly'),
+      human1('What is the capital of the United States?'),
+      human2('The capital of the United States is Los Angeles, CA'),
       new AIChatMessage('1'),
-      new HumanChatMessage('The Moon is made of green cheese'),
-      new AIChatMessage('1'),
-      new HumanChatMessage('The Earth is not flat'),
-      new AIChatMessage('5'),
-      new HumanChatMessage('Dinosaurs were all large, lumbering creatures'),
-      new AIChatMessage('2'),
-      new HumanChatMessage('Birds can fly'),
-      new AIChatMessage('4'),
-      new HumanChatMessage('Goldfish have a three-second memory'),
-      new AIChatMessage('2'),
-      new HumanChatMessage('All dogs are good swimmers'),
+      human1('Whats the best food?'),
+      human2('Pizza'),
+      new AIChatMessage('0'),
+      human1('Muhammid Ali, who was your shortest opponent?'),
+      human2('It was Joe Frazier standing at 6 foot 0 inches'),
       new AIChatMessage('3'),
-      new HumanChatMessage(
-        'People with a higher IQ are more successful in life'
-      ),
-      new AIChatMessage('3'),
-      new HumanChatMessage('The earth is flat'),
-      new AIChatMessage('1'),
-      new HumanChatMessage('Humans have 10 fingers and 10 toes'),
-      new AIChatMessage('4'),
-      new HumanChatMessage(
-        'Eating carrots significantly improves your night vision'
-      ),
-      new AIChatMessage('3'),
-      new HumanChatMessage(
-        'Photosynthesis is the process by which plants, algae, and some bacteria convert light energy into chemical energy'
-      ),
-      new AIChatMessage('5'),
-      new HumanChatMessage(`${character.name}: ${input}`),
+      human1(`Hey ${character.name}, ${input1 || ''}`),
+      human2(input2)
     ]);
 
     res.status(200).json(response);
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     res.status(500).json(new AIChatMessage('there was an error'));
   }
 }

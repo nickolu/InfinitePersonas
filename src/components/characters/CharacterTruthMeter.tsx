@@ -1,100 +1,152 @@
 import {
-  Box,
-  LinearProgress,
-  LinearProgressProps,
-  Typography,
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Box,
+    LinearProgressProps,
+    Typography,
 } from '@mui/material';
 import useRateCharacterTruthfulness from '@/components/hooks/useRateCharacterTruthfulness';
 import Character from '@/core/Character';
 import Message from '@/core/Message';
 
 function getTruthfulnessColor(truthfulnessRating: number | null): {
-  color: LinearProgressProps['color'];
-  hexColor: string;
+    color: LinearProgressProps['color'];
+    hexColor: string;
 } {
-  const colors = ['', 'error', 'warning', 'info', 'success', 'success'];
-  const hexColors = ['', '#f44336', '#ff9800', '#2196f3', '#4caf50', '#4caf50'];
+    const colors = ['', 'error', 'warning', 'info', 'success', 'success'];
+    const hexColors = [
+        '',
+        '#f44336',
+        '#ff9800',
+        '#2196f3',
+        '#4caf50',
+        '#4caf50',
+    ];
 
-  if (!truthfulnessRating) {
+    if (!truthfulnessRating) {
+        return {
+            color: 'primary',
+            hexColor: '#2196f3',
+        };
+    }
+
     return {
-      color: 'primary',
-      hexColor: '#2196f3',
+        color: colors[truthfulnessRating] as LinearProgressProps['color'],
+        hexColor: hexColors[truthfulnessRating],
     };
-  }
-
-  return {
-    color: colors[truthfulnessRating] as LinearProgressProps['color'],
-    hexColor: hexColors[truthfulnessRating],
-  };
 }
 
-const TruthMeterContent = ({
-  truthfulnessRating,
-}: {
-  truthfulnessRating: number;
-}) => {
-  if (Number(truthfulnessRating) === 0) {
-    return (
-      <Typography>
-        The AI wasn&apos;t able to rate the truthfulness of the AI&apos;s last
-        message. It&apos;s possible that the AI was confused or the message
-        can&apos;t be rated for truthfulness.
-      </Typography>
-    );
-  }
+const truthfulnessDescriptions = [
+    'not something we can check for truthfulness',
+    'very untruthful',
+    'untruthful',
+    'neutral',
+    'truthful',
+    'very truthful',
+];
 
-  return (
-    <Box mt={2}>
-      <Typography>
-        The last message from the AI was rated {truthfulnessRating}/5 for
-        truthfulness.
-      </Typography>
-    </Box>
-  );
+const TruthMeterContent = ({
+    truthfulnessRating,
+    truthfulnessExplanation,
+}: {
+    truthfulnessRating: number;
+    truthfulnessExplanation: string;
+}) => {
+    return (
+        <Box mt={2}>
+            <Typography>
+                We think the last message from the bot was{' '}
+                {truthfulnessDescriptions[truthfulnessRating]} because:{' '}
+            </Typography>
+            <Typography>{truthfulnessExplanation}</Typography>
+        </Box>
+    );
 };
 
 const CharacterTruthMeter = ({
-  message,
-  character,
-}: {
-  message: Message;
-  character: Character;
-}) => {
-  const {truthfulnessRating, isLoading} = useRateCharacterTruthfulness({
-    message,
+    userMessage,
+    botResponse,
     character,
-  });
+}: {
+    userMessage: Message;
+    botResponse: Message;
+    character: Character;
+}) => {
+    const {truthfulnessRating, truthfulnessExplanation, isLoading} =
+        useRateCharacterTruthfulness({
+            userMessage,
+            botResponse,
+            character,
+        });
 
-  return (
-    <Box
-      sx={{
-        background: '#111',
-        marginTop: '30px;',
-        borderRadius: '20px;',
-        padding: '20px;',
-        color: '#fff',
-        border:
-          '2px solid ' + getTruthfulnessColor(truthfulnessRating).hexColor,
-      }}
-    >
-      <Typography
-        variant="h6"
-        color={getTruthfulnessColor(truthfulnessRating).hexColor}
-      >
-        AI TruthMeter
-      </Typography>
-      {isLoading && (
-        <Box position="absolute" width="100%" textAlign="center">
-          <Typography variant="caption">Loading...</Typography>
+    return (
+        <Box
+            mt={4}
+            sx={{
+                display: 'flex',
+                alignSelf: 'flex-end',
+                color: '#fafafa',
+            }}
+        >
+            {/* MUI ACCORDION: */}
+            <Accordion
+                sx={{
+                    background: '#4a4a4a',
+                    border:
+                        '2px solid ' +
+                        getTruthfulnessColor(truthfulnessRating).hexColor,
+                }}
+            >
+                <AccordionSummary
+                    // expandIcon={<Box color="#fafafa">{'[+]'}</Box>}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                    sx={{
+                      flexGrow: 0,
+                    }}
+                >
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'flex-start',
+                      flexGrow: 0,
+                      margin: 0,
+                      '&.Mui-expanded': {
+                          margin: 0,
+                      },
+                  }}
+                  >
+                    <Typography
+                        variant="h6"
+                        sx={{
+                            marginBottom: 0,
+                        }}
+                        color={
+                            getTruthfulnessColor(truthfulnessRating).hexColor
+                        }
+                    >
+                        AI TruthMeter ({truthfulnessRating || '?'} / 5)
+                    </Typography>
+                    {(isLoading) && (
+                        <Box color="#fafafa" flexGrow={0} ml={4}>
+                            <Typography sx={{marginBottom: 0}}>Loading...</Typography>
+                        </Box>
+                    )}
+                    </Box>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Box color="#fafafa">
+                        <TruthMeterContent
+                            truthfulnessRating={truthfulnessRating}
+                            truthfulnessExplanation={truthfulnessExplanation}
+                        />
+                    </Box>
+                </AccordionDetails>
+            </Accordion>
         </Box>
-      )}
-      <TruthMeterContent truthfulnessRating={truthfulnessRating} />
-      <Typography variant="body2">
-        Warning: AI will lie to you. Even this meter could be wrong! It&apos;s
-        important to make sure to verify information you get from AI sources.
-      </Typography>
-    </Box>
-  );
+    );
 };
 
 export default CharacterTruthMeter;

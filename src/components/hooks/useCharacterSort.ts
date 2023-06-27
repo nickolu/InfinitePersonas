@@ -1,5 +1,5 @@
 import Character from '@/core/Character';
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
 
 type CharacterData = {
   [key: string]: Character;
@@ -58,7 +58,7 @@ export default function useCharacterSort({
 }) {
   const [sortBy, setSortBy] = useState<string>('name');
   const [reverse, setReverse] = useState<boolean>(false);
-  const sortedCharacterData = sortCharacters(sortBy, characterData, reverse);
+  let sortedCharacterData = sortCharacters(sortBy, characterData, reverse);
 
   return {
     reverse,
