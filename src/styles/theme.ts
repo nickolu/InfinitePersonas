@@ -1,4 +1,3 @@
-// styles/theme.ts
 import {createTheme} from '@mui/material/styles';
 
 const spacing = 8;
@@ -8,6 +7,9 @@ const theme = createTheme({
     h1: {
       fontSize: '2rem',
     },
+    h2: {
+      fontSize: '3rem',
+    }
   },
   spacing,
   components: {
