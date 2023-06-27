@@ -11,12 +11,16 @@ const SelectableButtonGroup = ({
   onSelection,
 }: {
   options: ButtonOption[];
-  onSelection: (value: string) => void;
+  onSelection: (value: string, switchDirection: boolean) => void;
 }) => {
   const [selectedButton, setSelectedButton] = React.useState('');
 
   const handleButtonClick = (value: string) => {
-    onSelection(value);
+    let switchDirection = false;
+    if (value === selectedButton) {
+      switchDirection = true;
+    }
+    onSelection(value, switchDirection);
     setSelectedButton(value);
   };
 

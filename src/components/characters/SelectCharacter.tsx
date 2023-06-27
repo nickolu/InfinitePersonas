@@ -23,7 +23,7 @@ const SelectCharacter = ({
     const [customCharacterDescription, setCustomCharacterDescription] =
         useState('');
 
-    const {setSortBy, sortedCharacterData} = useCharacterSort({
+    const {setSortBy, setReverse, reverse, sortedCharacterData} = useCharacterSort({
         characterData,
     });
 
@@ -102,10 +102,20 @@ const SelectCharacter = ({
                         Sort:{' '}
                         <Box ml={1}>
                             <SelectableButtonGroup
-                                options={sortOptions}
-                                onSelection={setSortBy}
+                                options={Object.values(sortOptions)}
+                                onSelection={(sortBy: string, switchDirection: boolean) => {
+                                  setSortBy(sortBy)
+                                  if (switchDirection) {
+                                    setReverse(!reverse)
+                                  }
+                                  
+                                }}
                             />
                         </Box>
+                        <Box className="reverse-arrow" ml={1}>
+                            {reverse ? '⬇️' : '⬆️'}
+                        </Box>
+                            
                     </Box>
                 </Grid>
 

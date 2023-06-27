@@ -9,7 +9,8 @@ export default function BasePageTemplate({
     <Box maxWidth={'1600px'} margin={'0 auto'}>
       <Grid container display={'flex'} justifyContent={'center'}>
         <Grid item xs={12} md={8}>
-          <Typography variant="h2">Infinite Personas</Typography>
+          <Typography variant="h2">Infinite Personas GPT</Typography>
+
           <Box
             mt={1.5}
             className="main"

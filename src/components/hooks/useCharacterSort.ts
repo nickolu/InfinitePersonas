@@ -12,11 +12,11 @@ type CharacterSortOption = {
   label: string;
 };
 
-export const sortOptions: CharacterSortOption[] = [
-  {value: 'name', label: 'Name'},
-  {value: 'category', label: 'Category'},
-  {value: 'random', label: 'Random'},
-];
+export const sortOptions: Record<string, CharacterSortOption> = {
+  name: {value: 'name', label: 'Name'},
+  category: {value: 'category', label: 'Category'},
+  random: {value: 'random', label: 'Random'},
+}
 
 function sortCharacters(
   sortBy: string,
@@ -25,19 +25,22 @@ function sortCharacters(
 ) {
   let sortedCharacters = Object.entries(characters);
 
-  sortOptions.forEach((option) => {
-    if (sortBy === option.value) {
+  const option = sortOptions[sortBy];
+  if (option) {
+    sortedCharacters = sortedCharacters.sort((a, b) => {
       if (option.value === 'random') {
-        sortedCharacters = sortedCharacters.sort(() => Math.random() - 0.5);
+        return Math.random() - 0.5;
       } else {
-        sortedCharacters = sortedCharacters.sort((a, b) =>
-          a[1][sortBy as keyof Character].localeCompare(
-            b[1][sortBy as keyof Character]
-          )
+        return a[1][option.value as keyof Character].localeCompare(
+          b[1][option.value as keyof Character]
         );
       }
-    }
-  });
+    });
+  }
+  
+  if (reverse) {
+    sortedCharacters = sortedCharacters.reverse();
+  }
 
   return sortedCharacters.reduce(
     (acc: Record<string, Character>, [key, value]: CharacterEntry) => {
@@ -54,10 +57,13 @@ export default function useCharacterSort({
   characterData: CharacterData;
 }) {
   const [sortBy, setSortBy] = useState<string>('name');
-  const sortedCharacterData = sortCharacters(sortBy, characterData);
+  const [reverse, setReverse] = useState<boolean>(false);
+  const sortedCharacterData = sortCharacters(sortBy, characterData, reverse);
 
   return {
+    reverse,
     sortBy,
+    setReverse,
     setSortBy,
     sortedCharacterData,
   };
