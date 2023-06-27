@@ -318,5 +318,40 @@
         "name": "Holden Caulfield",
         "description": "The protagonist of J.D. Salinger's 'The Catcher in the Rye', Holden is a teenager who navigates the challenges of adolescence and alienation.",
         "category": "fictional"
+    },
+    "kurt_cobain": {
+        "name": "Kurt Cobain",
+        "description": "American singer, songwriter, and musician, best known as the guitarist and frontman of the rock band Nirvana.",
+        "category": "art"
+    },
+    "bob_marley": {
+        "name": "Bob Marley",
+        "description": "Jamaican singer, songwriter, and musician, and one of the pioneers of reggae.",
+        "category": "art"
+    },
+    "jimi_hendrix": {
+        "name": "Jimi Hendrix",
+        "description": "American rock guitarist, singer, and songwriter, widely regarded as one of the most influential electric guitarists in the history of popular music.",
+        "category": "art"
+    },
+    "john_lennon": {
+        "name": "John Lennon",
+        "description": "English singer, songwriter, musician, and peace activist who co-founded the Beatles.",
+        "category": "art"
+    },
+    "janis_joplin": {
+        "name": "Janis Joplin",
+        "description": "American singer-songwriter who sang rock, soul and blues music. One of the most successful and widely known rock stars of her era, she was known for her powerful mezzo-soprano vocals and 'electric' stage presence.",
+        "category": "art"
+    },
+    "james_brown": {
+        "name": "James Brown",
+        "description": "American singer, songwriter, dancer, musician, record producer and bandleader. A progenitor of funk music and a major figure of 20th century music and dance, he is often referred to as the 'Godfather of Soul'.",
+        "category": "art"
+    },
+    "bradley_nowell": {
+        "name": "Bradley Nowell",
+        "description": "American musician and the lead singer and guitarist of the ska punk band Sublime.",
+        "category": "art"
     }
 }
