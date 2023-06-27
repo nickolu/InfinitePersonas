@@ -7,50 +7,64 @@ import {
 } from 'langchain/schema';
 
 function human1(text: string) {
-    const human1 = new HumanChatMessage(
-      text
-    );
+    const human1 = new HumanChatMessage(text);
     human1.name = 'user';
     return human1;
-  }
-  
-  function human2(text: string, name: string) {
-    const human2 = new HumanChatMessage(
-      text
-    );
+}
+
+function human2(text: string, name: string) {
+    const human2 = new HumanChatMessage(text);
     human2.name = name;
     return human2;
-  }
-  
+}
 
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<any>
 ) {
     const chat = new ChatOpenAI({
-        temperature: 0.6,
+        temperature: 0,
         modelName: process.env.RATE_TRUTHFULNESS_GPT_MODEL,
     });
-    const {input, input1, input2, character, truthfulnessRating} = req?.body?.params || {
-        input: '',
+    const {input1, input2, character, truthfulnessRating} = req?.body
+        ?.params || {
         input1: '',
         input2: '',
         character: {name: 'an Erroring Robot'},
-        truthfulnessRating: 0
+        truthfulnessRating: 0,
     };
 
-    let prompt = `We rated the truthfulness of the second statement, the one made by ${character.name}, as ${truthfulnessRating} out of 5. Please give your best explanation as to why.`;
+    console.log(
+        'explainTruthfulnessRating.ts',
+        input1,
+        ',',
+        input2,
+        ',',
+        character,
+        ',',
+        truthfulnessRating
+    );
+
+    const promptPrefix = `
+    RESPONSE:
+    \`\`\`
+    ${character.name}: ${input2}
+    \`\`\`
+
+    for this message, assume it was spoken by ${character.name} in response to the following message: 
+
+    PROMPT:
+    \`\`\`
+    User: ${input1}
+    \`\`\``;
+
+    let prompt = `we rated the response as as ${truthfulnessRating} out of 5 for truthfulness. Please give your best explanation as to why it was rated that way including which parts are factual and not factual.`;
+
     if (truthfulnessRating === 0) {
-        prompt = `We were unable to rate the second statement, the one made by ${character.name}, for truthfulness. Please give your best explanation as to why.`
+        prompt = `we were unable to evaluate the response for truthfulness. Please give your best explanation as to why we could not, but also describe which parts are factual and not factual.`;
     }
     try {
-        const response = await chat.call([
-            new SystemChatMessage(
-                prompt
-            ),
-            human1(input1 || ''),
-            human2(input2, character.name.split(' ')[0]),
-        ]);
+        const response = await chat.call([new HumanChatMessage(promptPrefix+prompt)]);
 
         res.status(200).json(response);
     } catch (error) {

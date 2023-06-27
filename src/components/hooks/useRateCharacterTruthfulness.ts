@@ -8,6 +8,7 @@ async function getTruthfulnessRating(
     input2: string,
     character: Character
 ) {
+    
     const apiUrl = `/api/LLM/rateTruthfulness`;
 
     try {
@@ -29,6 +30,8 @@ async function getTruthfulnessExplanation(
     truthfulnessRating: number
 ) {
     const apiUrl = `/api/LLM/explainTruthfulnessRating`;
+
+
 
     try {
         const response = await axios.post(apiUrl, {
@@ -57,42 +60,57 @@ export default function useRateCharacterTruthfulness({
         useState<string>('');
 
     useEffect(() => {
-        if (userMessage && botResponse && !botResponse?.isUser) {
+        console.log('userMessage, botResponse, or character changed')
+        if (botResponse && !botResponse?.isUser) {
             setIsLoading(true);
-
+            setTruthfulnessExplanation('')
+            
             getTruthfulnessRating(userMessage.text, botResponse.text, character)
                 .then((response) => {
-                    setIsLoading(false);
                     setTruthfulnessRating(Number(response.text));
-                    setTruthfulnessExplanation('')
+                    getTruthfulnessExplanation(
+                        userMessage.text,
+                        botResponse.text,
+                        character,
+                        Number(response.text)
+                    )
+                        .then((response) => {
+                            setIsLoading(false);
+                            setTruthfulnessExplanation(response.text);
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                            setIsLoading(false);
+                        });
                 })
                 .catch((error) => {
                     console.error(error);
                     setIsLoading(false);
                 });
         }
-    }, [userMessage, botResponse, character]);
+    }, [userMessage, botResponse, character, setTruthfulnessExplanation]);
+
+
 
     useEffect(() => {
-        if (userMessage && botResponse && !botResponse?.isUser) {
-            setIsLoading(true);
+        console.log('truthfulnessRating changed to', truthfulnessRating)
+        
+    }, [truthfulnessRating]);
 
-            getTruthfulnessExplanation(
-                userMessage.text,
-                botResponse.text,
-                character,
-                truthfulnessRating
-            )
-                .then((response) => {
-                    setIsLoading(false);
-                    setTruthfulnessExplanation(response.text);
-                })
-                .catch((error) => {
-                    console.error(error);
-                    setIsLoading(false);
-                });
-        }
-    }, [truthfulnessRating, userMessage, botResponse, character]);
+    useEffect(() => {
+        console.log('userMessage changed to', userMessage)
+        
+    }, [userMessage]);
+
+    useEffect(() => {
+        console.log('botResponse changed to', botResponse)
+        
+    }, [botResponse]);
+
+    useEffect(() => {
+        console.log('character changed to', character)
+        
+    }, [character]);
 
     return {
         isLoading,

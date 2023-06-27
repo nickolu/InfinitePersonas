@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {Box, Button, TextField, Typography} from '@mui/material';
 import Character from '@/core/Character';
 import Message from '@/core/Message';
@@ -41,7 +41,10 @@ const CharacterChat = ({character, children}: CharacterChatProps) => {
         messages,
         onSuccess: addBotMessage,
     });
-    const lastMessage = messages[messages.length - 1];
+    
+    const lastTwoMessages = messages.slice(-2);
+    const lastMessage = lastTwoMessages[1];
+    const secondToLastMessage = lastTwoMessages[0];
 
     useEffect(() => {
         if (lastMessage && lastMessage.isUser) {
@@ -49,6 +52,35 @@ const CharacterChat = ({character, children}: CharacterChatProps) => {
         }
     }, [lastMessage, generateResponse]);
 
+    const handleChatInput = useCallback(
+        (e: {target: {value: string}}) => {
+            setInputText(e.target.value);
+        },
+        [setInputText]
+    );
+
+    const handleSubmit = useCallback(
+        (e: {preventDefault: () => void}) => {
+            e.preventDefault();
+            if (isLoading) {
+                return;
+            }
+            if (!inputText) {
+                return;
+            }
+            addUserMessage(inputText);
+            setInputText('');
+        },
+        [isLoading, inputText, addUserMessage]
+    );
+
+    useEffect(()=>{
+      console.log('lastMessage changed')
+    }, [lastMessage])
+
+    useEffect(()=>{
+      console.log('secondToLastMessage changed')
+    }, [secondToLastMessage])
 
     return (
         <Box>
@@ -99,17 +131,7 @@ const CharacterChat = ({character, children}: CharacterChatProps) => {
                 component="form"
                 noValidate
                 autoComplete="off"
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    if (isLoading) {
-                        return;
-                    }
-                    if (!inputText) {
-                        return;
-                    }
-                    addUserMessage(inputText);
-                    setInputText('');
-                }}
+                onSubmit={handleSubmit}
             >
                 <Box display="flex" mt={3}>
                     <Box flexGrow={1} width="100%" pr={1}>
@@ -118,9 +140,7 @@ const CharacterChat = ({character, children}: CharacterChatProps) => {
                             label="Message"
                             variant="outlined"
                             rows={4}
-                            onChange={(e) => {
-                                setInputText(e.target.value);
-                            }}
+                            onChange={handleChatInput}
                             value={inputText}
                             fullWidth
                         />
@@ -137,7 +157,7 @@ const CharacterChat = ({character, children}: CharacterChatProps) => {
             </Box>
             {lastMessage && !lastMessage?.isUser && (
                 <CharacterTruthMeter
-                    userMessage={messages[messages.length - 2] || {}}
+                    userMessage={secondToLastMessage}
                     botResponse={lastMessage}
                     character={character}
                 />
