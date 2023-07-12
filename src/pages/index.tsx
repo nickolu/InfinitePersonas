@@ -5,6 +5,8 @@ import {useState} from 'react';
 import CharacterChat from '@/components/characters/CharacterChat';
 import Character from '@/core/Character';
 import {Box, Button} from '@mui/material';
+import { Helmet } from 'react-helmet';
+
 
 function HomePageContent() {
     const [selectedCharacter, setSelectedCharacter] =
@@ -52,8 +54,15 @@ export default function Home() {
                     name="viewport"
                     content="width=device-width, initial-scale=1"
                 />
-                s <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" href="/favicon.ico" />
             </Head>
+            <Helmet>
+                <meta property="og:title" content="Chat with anyone you can imagine" />
+                <meta
+                property="og:description"
+                content="Use GPT4 to simulate a chat with anyone you can describe. Has a built in lie detector to help you find out if they're telling the truth."
+                />
+            </Helmet>
 
             <BasePageTemplate
                 onHomeClick={() => {
