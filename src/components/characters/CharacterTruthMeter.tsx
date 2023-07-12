@@ -6,6 +6,8 @@ import {
     LinearProgressProps,
     Typography,
 } from '@mui/material';
+import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
+import AddIcon from '@mui/icons-material/Add';
 import useRateCharacterTruthfulness from '@/components/hooks/useRateCharacterTruthfulness';
 import Character from '@/core/Character';
 import Message from '@/core/Message';
@@ -91,57 +93,88 @@ const CharacterTruthMeter = ({
         >
             {/* MUI ACCORDION: */}
             <Accordion
+                disableGutters
+                elevation={0}
                 sx={{
                     background: '#4a4a4a',
                     border:
                         '2px solid ' +
                         getTruthfulnessColor(truthfulnessRating).hexColor,
+                    width: '100%',
+                    flexDirection: 'row-reverse',
+                    '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
+                        transform: 'rotate(90deg)',
+                    },
+                    '& .MuiAccordionSummary-content': {
+                        marginLeft: '12px',
+                    },
                 }}
             >
                 <AccordionSummary
-                    // expandIcon={<Box color="#fafafa">{'[+]'}</Box>}
+                    expandIcon={
+                        <Box
+                            color={
+                                getTruthfulnessColor(truthfulnessRating)
+                                    .hexColor
+                            }
+                        >
+                            <ArrowForwardIosSharpIcon
+                                sx={{fontSize: '0.9rem'}}
+                                color="inherit"
+                            />
+                        </Box>
+                    }
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                     sx={{
-                      flexGrow: 0,
+                        flexGrow: 0,
                     }}
                 >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'flex-start',
-                      flexGrow: 0,
-                      margin: 0,
-                      '&.Mui-expanded': {
-                          margin: 0,
-                      },
-                  }}
-                  >
-                    <Typography
-                        variant="h6"
+                    <Box
                         sx={{
-                            marginBottom: 0,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'flex-start',
+                            flexGrow: 0,
+                            margin: 0,
+                            '&.Mui-expanded': {
+                                margin: 0,
+                            },
                         }}
-                        color={
-                            getTruthfulnessColor(truthfulnessRating).hexColor
-                        }
                     >
-                        AI TruthMeter ({truthfulnessRating || '?'} / 5)
-                    </Typography>
-                    {(isLoading) && (
-                        <Box color="#fafafa" flexGrow={0} ml={4}>
-                            <Typography sx={{marginBottom: 0}}>Loading...</Typography>
-                        </Box>
-                    )}
+                        <Typography
+                            variant="h6"
+                            sx={{
+                                marginBottom: 0,
+                            }}
+                            color={
+                                getTruthfulnessColor(truthfulnessRating)
+                                    .hexColor
+                            }
+                        >
+                            AI TruthMeter ({truthfulnessRating || '?'} / 5)
+                        </Typography>
+                        {isLoading && (
+                            <Box color="#fafafa" flexGrow={0} ml={4}>
+                                <Typography sx={{marginBottom: 0}}>
+                                    Loading...
+                                </Typography>
+                            </Box>
+                        )}
                     </Box>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Box color="#fafafa">
-                        <TruthMeterContent
-                            truthfulnessRating={truthfulnessRating}
-                            truthfulnessExplanation={truthfulnessExplanation}
-                        />
+                        {isLoading ? (
+                            'Loading...'
+                        ) : (
+                            <TruthMeterContent
+                                truthfulnessRating={truthfulnessRating}
+                                truthfulnessExplanation={
+                                    truthfulnessExplanation
+                                }
+                            />
+                        )}
                     </Box>
                 </AccordionDetails>
             </Accordion>
