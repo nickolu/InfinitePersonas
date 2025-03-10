@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useState, useRef, useMemo} from 'react';
-import {Box, Button, Stack, TextField, Theme, Typography, keyframes} from '@mui/material';
+import {Box, Button, Divider, Stack, TextField, Theme, Typography, keyframes} from '@mui/material';
 import Character from '@/core/Character';
 import Message from '@/core/Message';
 import useStreamingChat from '@/components/hooks/useStreamingChat';
@@ -197,7 +197,13 @@ const CharacterChat = ({character, resetButton}: CharacterChatProps) => {
                 width: '100%',
             }}
         >
-            
+            <Typography variant="h5">
+                You are chatting with {character.name}
+            </Typography>
+            <Typography variant="subtitle2">
+                {character.description}
+            </Typography>
+            <Divider />
             <Box
                 sx={{
                     flex: 1,

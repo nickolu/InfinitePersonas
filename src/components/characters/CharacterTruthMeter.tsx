@@ -112,7 +112,6 @@ const CharacterTruthMeter = ({
             sx={{
                 display: 'flex',
                 alignSelf: 'flex-end',
-                color: '#fafafa',
                 width: '100%',
             }}
         >
@@ -121,7 +120,6 @@ const CharacterTruthMeter = ({
                 disableGutters
                 elevation={0}
                 sx={{
-                    background: '#4a4a4a',
                     border:
                         '2px solid ' +
                         getTruthfulnessColor(truthfulnessRating).hexColor,
@@ -180,14 +178,14 @@ const CharacterTruthMeter = ({
                             AI TruthMeter ({truthfulnessRating || '?'} / 5)
                         </Typography>
                         {isLoading && (
-                            <Box color="#fafafa" flexGrow={0} ml={4}>
+                            <Box flexGrow={0} ml={4}>
                                 <CircularProgress size={20} />
                             </Box>
                         )}
                     </Box>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Box color="#fafafa">
+                    <Box>
                         {isLoading ? (
                             'Loading...'
                         ) : (
