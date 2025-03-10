@@ -54,7 +54,6 @@ async function getNextChatMessage(
         await new Promise((res) => setTimeout(res, RESET_TIMEOUT_MS));
         attempt++;
       } else {
-        console.log(error);
         return {text: `Error: ${message}`};
       }
     }
@@ -70,14 +69,16 @@ export function useWelcomeMessage(
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsLoading(true);
-    getNextChatMessage([new UserMessage('hello!')], character).then(
-      (response) => {
-        setIsLoading(false);
-        onSuccess(response.text);
-      }
-    );
-  }, [character, onSuccess]);
+    if (character && character.name) {
+      setIsLoading(true);
+      getNextChatMessage([new UserMessage('hello!')], character).then(
+        (response) => {
+          setIsLoading(false);
+          onSuccess(response.text);
+        }
+      );
+    }
+  }, [character, character.name, onSuccess]);
 
   return {
     isLoading,

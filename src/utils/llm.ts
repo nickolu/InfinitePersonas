@@ -1,12 +1,18 @@
 import Message from '@/core/Message';
-import {AIChatMessage, HumanChatMessage} from 'langchain/schema';
+import { HumanMessage, AIMessage } from '@langchain/core/messages';
 
 export function messageInputsToChatMessages(inputs: Message[]) {
   return inputs.map((input) => {
     if (input.isUser) {
-      return new HumanChatMessage(input.text);
+      return new HumanMessage({
+        content: input?.text ?? '',
+        additional_kwargs: {},
+      });
     } else {
-      return new AIChatMessage(input.text);
+      return new AIMessage({
+        content: input?.text ?? '',
+        additional_kwargs: {},
+      });
     }
   });
 }

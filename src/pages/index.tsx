@@ -4,7 +4,7 @@ import SelectCharacter from '@/components/characters/SelectCharacter';
 import {useState} from 'react';
 import CharacterChat from '@/components/characters/CharacterChat';
 import Character from '@/core/Character';
-import {Box, Button} from '@mui/material';
+import {Box, Button, Stack, Typography} from '@mui/material';
 import { Helmet } from 'react-helmet';
 
 
@@ -12,30 +12,41 @@ function HomePageContent() {
     const [selectedCharacter, setSelectedCharacter] =
         useState<Character | null>(null);
 
+    let characterChat = <SelectCharacter
+        {...{
+            selectedCharacter,
+            setSelectedCharacter,
+        }}
+    />
+
     if (selectedCharacter) {
-        return (
-            <>
-                <CharacterChat character={selectedCharacter}>
-                    <Box mt={2}>
-                        <Button
+        characterChat = (
+            <CharacterChat 
+                character={selectedCharacter} 
+                resetButton={
+                    <Button
+                            variant="outlined"
                             onClick={() => {
                                 setSelectedCharacter(null);
                             }}
                         >
                             Chat with someone else
                         </Button>
-                    </Box>
-                </CharacterChat>
-            </>
-        );
+                }
+            />
+        );  
     }
     return (
-        <SelectCharacter
-            {...{
-                selectedCharacter,
-                setSelectedCharacter,
-            }}
-        />
+        <>
+            {characterChat}
+            <Stack justifyContent="flex-start" width="100%" mt={2}>
+                <Typography variant="caption" color="white">
+                    character model: {process.env.NEXT_PUBLIC_CHARACTER_CONVERSATION_GPT_MODEL}; 
+                    rate truthfulness model: {process.env.NEXT_PUBLIC_RATE_TRUTHFULNESS_GPT_MODEL}; 
+                </Typography>
+            </Stack>
+        </>
+        
     );
 }
 

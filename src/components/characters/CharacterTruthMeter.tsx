@@ -3,6 +3,7 @@ import {
     AccordionDetails,
     AccordionSummary,
     Box,
+    CircularProgress,
     LinearProgressProps,
     Typography,
 } from '@mui/material';
@@ -11,6 +12,7 @@ import AddIcon from '@mui/icons-material/Add';
 import useRateCharacterTruthfulness from '@/components/hooks/useRateCharacterTruthfulness';
 import Character from '@/core/Character';
 import Message from '@/core/Message';
+import { useState, useEffect } from 'react';
 
 function getTruthfulnessColor(truthfulnessRating: number | null): {
     color: LinearProgressProps['color'];
@@ -55,6 +57,7 @@ const TruthMeterContent = ({
     truthfulnessRating: number;
     truthfulnessExplanation: string;
 }) => {
+    console.log(truthfulnessRating, truthfulnessExplanation);
     return (
         <Box mt={2}>
             <Typography>
@@ -67,20 +70,41 @@ const TruthMeterContent = ({
 };
 
 const CharacterTruthMeter = ({
-    userMessage,
-    botResponse,
     character,
+    messages,
+    isStreamComplete = true,
 }: {
-    userMessage: Message;
-    botResponse: Message;
     character: Character;
+    messages: Message[];
+    isStreamComplete?: boolean;
 }) => {
-    const {truthfulnessRating, truthfulnessExplanation, isLoading} =
-        useRateCharacterTruthfulness({
-            userMessage,
-            botResponse,
-            character,
-        });
+    
+    const botResponse = messages[messages.length - 1] ?? null;
+    const userMessage = messages[messages.length - 2] ?? null;
+    
+    const {
+        truthfulnessRating, 
+        truthfulnessExplanation, 
+        isLoading,
+        startAnalysis
+    } = useRateCharacterTruthfulness({
+        userMessage,
+        botResponse,
+        character,
+        skipAutoAnalysis: true, // Skip automatic analysis, we'll trigger it manually
+    });
+
+    // Start analysis when streaming is complete
+    useEffect(() => {
+        if (isStreamComplete && botResponse && !botResponse.isUser) {
+            startAnalysis();
+        }
+    }, [isStreamComplete, botResponse, startAnalysis]);
+
+    // Only show the truth meter if we have at least 2 messages and the last one is from the bot
+    if (messages.length < 2 || messages[messages.length - 1].isUser) {
+        return null;
+    }
 
     return (
         <Box
@@ -89,6 +113,7 @@ const CharacterTruthMeter = ({
                 display: 'flex',
                 alignSelf: 'flex-end',
                 color: '#fafafa',
+                width: '100%',
             }}
         >
             {/* MUI ACCORDION: */}
@@ -156,9 +181,7 @@ const CharacterTruthMeter = ({
                         </Typography>
                         {isLoading && (
                             <Box color="#fafafa" flexGrow={0} ml={4}>
-                                <Typography sx={{marginBottom: 0}}>
-                                    Loading...
-                                </Typography>
+                                <CircularProgress size={20} />
                             </Box>
                         )}
                     </Box>
