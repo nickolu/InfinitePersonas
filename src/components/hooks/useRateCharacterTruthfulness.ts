@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useRef, useCallback} from 'react';
 import Character from '@/core/Character';
 import Message from '@/core/Message';
 
@@ -31,8 +31,6 @@ async function getTruthfulnessExplanation(
 ) {
     const apiUrl = `/api/LLM/explainTruthfulnessRating`;
 
-
-
     try {
         const response = await axios.post(apiUrl, {
             params: {input1, input2, character, truthfulnessRating},
@@ -49,33 +47,35 @@ export default function useRateCharacterTruthfulness({
     userMessage,
     botResponse,
     character,
+    skipAutoAnalysis = false,
 }: {
     userMessage: Message;
     botResponse: Message;
     character: Character;
+    skipAutoAnalysis?: boolean;
 }) {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [truthfulnessRating, setTruthfulnessRating] = useState<number>(0);
-    const [truthfulnessExplanation, setTruthfulnessExplanation] =
-        useState<string>('');
-
-    useEffect(() => {
-        if (botResponse && !botResponse?.isUser) {
+    const [truthfulnessExplanation, setTruthfulnessExplanation] = useState<string>('');
+    
+    // Function to start the analysis manually
+    const startAnalysis = useCallback(() => {
+        if (userMessage && botResponse && !botResponse?.isUser) {
             setIsLoading(true);
-            setTruthfulnessExplanation('')
+            setTruthfulnessExplanation('');
             
-            getTruthfulnessRating(userMessage.text, botResponse.text, character)
+            getTruthfulnessRating(userMessage?.text ?? '', botResponse?.text ?? '', character)
                 .then((response) => {
-                    setTruthfulnessRating(Number(response.text));
+                    setTruthfulnessRating(Number(response.content));
                     getTruthfulnessExplanation(
-                        userMessage.text,
-                        botResponse.text,
+                        userMessage?.text ?? '',
+                        botResponse?.text ?? '',
                         character,
-                        Number(response.text)
+                        Number(response.content)
                     )
                         .then((response) => {
                             setIsLoading(false);
-                            setTruthfulnessExplanation(response.text);
+                            setTruthfulnessExplanation(response.content);
                         })
                         .catch((error) => {
                             console.error(error);
@@ -87,11 +87,19 @@ export default function useRateCharacterTruthfulness({
                     setIsLoading(false);
                 });
         }
-    }, [userMessage, botResponse, character, setTruthfulnessExplanation]);
+    }, [userMessage, botResponse, character]);
 
+    // Auto-start analysis if skipAutoAnalysis is false
+    useEffect(() => {
+        if (!skipAutoAnalysis && userMessage && botResponse && !botResponse?.isUser) {
+            startAnalysis();
+        }
+    }, [userMessage, botResponse, character, skipAutoAnalysis, startAnalysis]);
+    
     return {
         isLoading,
         truthfulnessRating,
         truthfulnessExplanation,
+        startAnalysis,
     };
 }

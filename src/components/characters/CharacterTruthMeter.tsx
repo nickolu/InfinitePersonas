@@ -11,6 +11,7 @@ import AddIcon from '@mui/icons-material/Add';
 import useRateCharacterTruthfulness from '@/components/hooks/useRateCharacterTruthfulness';
 import Character from '@/core/Character';
 import Message from '@/core/Message';
+import { useState, useEffect } from 'react';
 
 function getTruthfulnessColor(truthfulnessRating: number | null): {
     color: LinearProgressProps['color'];
@@ -55,6 +56,7 @@ const TruthMeterContent = ({
     truthfulnessRating: number;
     truthfulnessExplanation: string;
 }) => {
+    console.log(truthfulnessRating, truthfulnessExplanation);
     return (
         <Box mt={2}>
             <Typography>
@@ -69,24 +71,39 @@ const TruthMeterContent = ({
 const CharacterTruthMeter = ({
     character,
     messages,
+    isStreamComplete = true,
 }: {
     character: Character;
     messages: Message[];
+    isStreamComplete?: boolean;
 }) => {
+    
+    const botResponse = messages[messages.length - 1] ?? null;
+    const userMessage = messages[messages.length - 2] ?? null;
+    
+    const {
+        truthfulnessRating, 
+        truthfulnessExplanation, 
+        isLoading,
+        startAnalysis
+    } = useRateCharacterTruthfulness({
+        userMessage,
+        botResponse,
+        character,
+        skipAutoAnalysis: true, // Skip automatic analysis, we'll trigger it manually
+    });
+
+    // Start analysis when streaming is complete
+    useEffect(() => {
+        if (isStreamComplete && botResponse && !botResponse.isUser) {
+            startAnalysis();
+        }
+    }, [isStreamComplete, botResponse, startAnalysis]);
+
     // Only show the truth meter if we have at least 2 messages and the last one is from the bot
     if (messages.length < 2 || messages[messages.length - 1].isUser) {
         return null;
     }
-    
-    const botResponse = messages[messages.length - 1];
-    const userMessage = messages[messages.length - 2];
-    
-    const {truthfulnessRating, truthfulnessExplanation, isLoading} =
-        useRateCharacterTruthfulness({
-            userMessage,
-            botResponse,
-            character,
-        });
 
     return (
         <Box

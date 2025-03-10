@@ -8,6 +8,7 @@ import useChatLog from '@/components/hooks/useChatLog';
 import PageLoadingSpinner from '@/components/Loaders/PageLoadingSpinner';
 import StreamingText from '@/components/util/StreamingText';
 import {Autorenew} from '@mui/icons-material';
+import CharacterTruthMeter from './CharacterTruthMeter';
 
 type CharacterChatProps = {
     character: Character;
@@ -43,13 +44,13 @@ const UserMessage = ({message}: {message: Message}) => {
 
 const BotMessage = ({message}: {message: Message}) => {
     return (
-        message.text && (
+        message.text ? (
             <Box className="bot" sx={botMessageStyles}>
                 <Typography sx={{ marginBottom: 0 }}>
                     <StreamingText>{message.text}</StreamingText>
                 </Typography>
             </Box>
-        )
+        ) : null
     );
 };
 
@@ -96,6 +97,17 @@ const CharacterChat = ({character, children}: CharacterChatProps) => {
     const lastMessage = lastTwoMessages[1];
     const secondToLastMessage = lastTwoMessages[0];
 
+    // Load welcome message when component mounts
+    useEffect(() => {
+        if (character && messages.length === 0) {
+            // Add an empty bot message that will be filled with streaming content
+            addBotMessage('');
+            setStreamingText('');
+            setIsStreamComplete(false);
+            generateStreamingResponse();
+        }
+    }, [character, messages.length, addBotMessage, generateStreamingResponse, isStreaming]);
+    
     useEffect(() => {
         if (lastMessage && lastMessage.isUser) {
             // Add an empty bot message that will be filled with streaming content
@@ -208,6 +220,11 @@ const CharacterChat = ({character, children}: CharacterChatProps) => {
                     </Button>
                 )}
             </Box>
+            <CharacterTruthMeter 
+                character={character} 
+                messages={messages} 
+                isStreamComplete={isStreamComplete}
+            />
         </Box>
     );
 };
