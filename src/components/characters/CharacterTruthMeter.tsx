@@ -3,6 +3,7 @@ import {
     AccordionDetails,
     AccordionSummary,
     Box,
+    CircularProgress,
     LinearProgressProps,
     Typography,
 } from '@mui/material';
@@ -112,6 +113,7 @@ const CharacterTruthMeter = ({
                 display: 'flex',
                 alignSelf: 'flex-end',
                 color: '#fafafa',
+                width: '100%',
             }}
         >
             {/* MUI ACCORDION: */}
@@ -179,9 +181,7 @@ const CharacterTruthMeter = ({
                         </Typography>
                         {isLoading && (
                             <Box color="#fafafa" flexGrow={0} ml={4}>
-                                <Typography sx={{marginBottom: 0}}>
-                                    Loading...
-                                </Typography>
+                                <CircularProgress size={20} />
                             </Box>
                         )}
                     </Box>

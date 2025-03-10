@@ -1,15 +1,13 @@
 import { ReactNode, useEffect, useState } from 'react';
 
 interface StreamingTextProps {
-  children?: string;
-  text?: string;
+  text: string;
   isComplete?: boolean;
   onComplete?: () => void;
   render?: (text: string) => ReactNode;
 }
 
 const StreamingText = ({
-  children,
   text,
   isComplete = false,
   onComplete,
@@ -17,13 +15,10 @@ const StreamingText = ({
 }: StreamingTextProps) => {
   const [displayText, setDisplayText] = useState<string>('');
   
-  // Use children as text if provided
-  const content = children || text || '';
-  
   // Update the display text when the content changes
   useEffect(() => {
-    setDisplayText(content);
-  }, [content]);
+    setDisplayText(text);
+  }, [text]);
   
   // Call onComplete when isComplete is true
   useEffect(() => {

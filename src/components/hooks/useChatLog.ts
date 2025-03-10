@@ -1,16 +1,62 @@
 import Message, {BotMessage, SystemMessage, UserMessage} from '@/core/Message';
 import {useState, useCallback, useEffect} from 'react';
 
-const useChatLog = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
+const CHAT_STORAGE_KEY = 'infinitePersonas_chatLog';
+
+const useChatLog = (characterId?: string) => {
+  const storageKey = characterId ? `${CHAT_STORAGE_KEY}_${characterId}` : CHAT_STORAGE_KEY;
+  
+  // Initialize state from localStorage if available
+  const [messages, setMessages] = useState<Message[]>(() => {
+    if (typeof window === 'undefined') return [];
+    
+    try {
+      const savedMessages = localStorage.getItem(storageKey);
+      if (savedMessages) {
+        const parsedMessages = JSON.parse(savedMessages);
+        return parsedMessages.map((msg: any) => {
+          if (msg.isUser) {
+            const userMsg = new UserMessage(msg.text);
+            userMsg.id = msg.id;
+            return userMsg;
+          } else {
+            const botMsg = new BotMessage(msg.text);
+            botMsg.id = msg.id;
+            return botMsg;
+          }
+        });
+      }
+    } catch (e) {
+      console.error('Error loading chat from localStorage:', e);
+    }
+    return [];
+  });
+  
   const [numberOfRemovals, setNumberOfRemovals] = useState<number>(0);
+
+  // Save messages to localStorage whenever they change
+  useEffect(() => {
+    if (typeof window === 'undefined' || messages.length === 0) return;
+    
+    try {
+      const serializedMessages = JSON.stringify(messages.map(msg => ({
+        text: msg.text,
+        isUser: msg.isUser,
+        id: msg.id
+      })));
+      localStorage.setItem(storageKey, serializedMessages);
+    } catch (e) {
+      console.error('Error saving chat to localStorage:', e);
+    }
+  }, [messages, storageKey]);
 
   const addUserMessage = useCallback((message: string) => {
     setMessages((messages) => {
       if (!messages) {
         return [new UserMessage(message)];
       }
-      return [...messages, new UserMessage(message)];
+      const newMessages = [...messages, new UserMessage(message)];
+      return newMessages;
     });
   }, []);
 
@@ -19,7 +65,8 @@ const useChatLog = () => {
       if (!messages) {
         return [new BotMessage(message)];
       }
-      return [...messages, new BotMessage(message)];
+      const newMessages = [...messages, new BotMessage(message)];
+      return newMessages;
     });
   }, []);
 
@@ -66,6 +113,13 @@ const useChatLog = () => {
     });
   }, []);
 
+  const clearMessages = useCallback(() => {
+    setMessages([]);
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(storageKey);
+    }
+  }, [storageKey]);
+
   return {
     messages,
     addUserMessage,
@@ -73,6 +127,7 @@ const useChatLog = () => {
     addSystemMessage,
     removeLastMessage,
     updateLastBotMessage,
+    clearMessages,
     numberOfRemovals,
   };
 };

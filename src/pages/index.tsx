@@ -21,29 +21,26 @@ function HomePageContent() {
 
     if (selectedCharacter) {
         characterChat = (
-            <CharacterChat character={selectedCharacter}>
-                <Stack mt={2} direction="column" alignItems="flex-start" spacing={1}>
-                
-                    <Typography variant="h6" sx={{mb: 0}}>
-                        You are now chatting with {selectedCharacter.name}
-                    </Typography>
+            <CharacterChat 
+                character={selectedCharacter} 
+                resetButton={
                     <Button
-                        variant="outlined"
-                        onClick={() => {
-                            setSelectedCharacter(null);
-                        }}
-                    >
-                        Chat with someone else
-                    </Button>
-                </Stack>
-            </CharacterChat>
+                            variant="outlined"
+                            onClick={() => {
+                                setSelectedCharacter(null);
+                            }}
+                        >
+                            Chat with someone else
+                        </Button>
+                }
+            />
         );  
     }
     return (
         <>
             {characterChat}
             <Stack justifyContent="flex-start" width="100%" mt={2}>
-                <Typography variant="caption">
+                <Typography variant="caption" color="white">
                     character model: {process.env.NEXT_PUBLIC_CHARACTER_CONVERSATION_GPT_MODEL}; 
                     rate truthfulness model: {process.env.NEXT_PUBLIC_RATE_TRUTHFULNESS_GPT_MODEL}; 
                 </Typography>

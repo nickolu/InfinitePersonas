@@ -9,6 +9,7 @@ interface UseStreamingChatProps {
   onChunk: (chunk: string) => void;
   onComplete: (fullText: string) => void;
   onError: (error: string) => void;
+  onStartStreaming?: () => void;
 }
 
 const useStreamingChat = ({
@@ -17,6 +18,7 @@ const useStreamingChat = ({
   onChunk,
   onComplete,
   onError,
+  onStartStreaming,
 }: UseStreamingChatProps) => {
   const [isStreaming, setIsStreaming] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -38,6 +40,11 @@ const useStreamingChat = ({
 
     setIsStreaming(true);
     fullTextRef.current = '';
+
+    // If onStartStreaming is provided, call it to add an empty bot message
+    if (onStartStreaming) {
+      onStartStreaming();
+    }
 
     try {
       // Create a new AbortController for this request
@@ -109,7 +116,7 @@ const useStreamingChat = ({
       setIsStreaming(false);
       abortControllerRef.current = null;
     }
-  }, [character, messages, onChunk, onComplete, onError, isStreaming]);
+  }, [character, messages, onChunk, onComplete, onError, onStartStreaming, isStreaming]);
 
   const stopStreaming = useCallback(() => {
     if (abortControllerRef.current) {
