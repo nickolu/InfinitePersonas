@@ -60,7 +60,6 @@ export default function useRateCharacterTruthfulness({
         useState<string>('');
 
     useEffect(() => {
-        console.log('userMessage, botResponse, or character changed')
         if (botResponse && !botResponse?.isUser) {
             setIsLoading(true);
             setTruthfulnessExplanation('')
@@ -89,28 +88,6 @@ export default function useRateCharacterTruthfulness({
                 });
         }
     }, [userMessage, botResponse, character, setTruthfulnessExplanation]);
-
-
-
-    useEffect(() => {
-        console.log('truthfulnessRating changed to', truthfulnessRating)
-        
-    }, [truthfulnessRating]);
-
-    useEffect(() => {
-        console.log('userMessage changed to', userMessage)
-        
-    }, [userMessage]);
-
-    useEffect(() => {
-        console.log('botResponse changed to', botResponse)
-        
-    }, [botResponse]);
-
-    useEffect(() => {
-        console.log('character changed to', character)
-        
-    }, [character]);
 
     return {
         isLoading,

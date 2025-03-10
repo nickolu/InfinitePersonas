@@ -54,7 +54,6 @@ async function getNextChatMessage(
         await new Promise((res) => setTimeout(res, RESET_TIMEOUT_MS));
         attempt++;
       } else {
-        console.log(error);
         return {text: `Error: ${message}`};
       }
     }

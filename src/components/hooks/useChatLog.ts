@@ -42,12 +42,37 @@ const useChatLog = () => {
     });
   }, []);
 
+  const updateLastBotMessage = useCallback((updater: (prevText: string) => string) => {
+    setMessages((messages) => {
+      if (!messages || messages.length === 0) {
+        return messages;
+      }
+      
+      const lastIndex = messages.length - 1;
+      const lastMessage = messages[lastIndex];
+      
+      // Only update if the last message is a bot message
+      if (!lastMessage.isUser) {
+        const updatedMessage = new BotMessage(updater(lastMessage.text));
+        updatedMessage.id = lastMessage.id; // Preserve the original ID
+        
+        return [
+          ...messages.slice(0, lastIndex),
+          updatedMessage
+        ];
+      }
+      
+      return messages;
+    });
+  }, []);
+
   return {
     messages,
     addUserMessage,
     addBotMessage,
     addSystemMessage,
     removeLastMessage,
+    updateLastBotMessage,
     numberOfRemovals,
   };
 };

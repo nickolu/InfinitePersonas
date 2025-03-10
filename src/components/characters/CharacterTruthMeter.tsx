@@ -67,14 +67,20 @@ const TruthMeterContent = ({
 };
 
 const CharacterTruthMeter = ({
-    userMessage,
-    botResponse,
     character,
+    messages,
 }: {
-    userMessage: Message;
-    botResponse: Message;
     character: Character;
+    messages: Message[];
 }) => {
+    // Only show the truth meter if we have at least 2 messages and the last one is from the bot
+    if (messages.length < 2 || messages[messages.length - 1].isUser) {
+        return null;
+    }
+    
+    const botResponse = messages[messages.length - 1];
+    const userMessage = messages[messages.length - 2];
+    
     const {truthfulnessRating, truthfulnessExplanation, isLoading} =
         useRateCharacterTruthfulness({
             userMessage,

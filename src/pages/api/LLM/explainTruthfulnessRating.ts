@@ -1,19 +1,25 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
-import {ChatOpenAI} from 'langchain/chat_models/openai';
+import { ChatOpenAI } from '@langchain/openai';
 import {
-    AIChatMessage,
-    HumanChatMessage,
-    SystemChatMessage,
-} from 'langchain/schema';
+    AIMessage,
+    HumanMessage,
+    SystemMessage,
+} from '@langchain/core/messages';
 
 function human1(text: string) {
-    const human1 = new HumanChatMessage(text);
+    const human1 = new HumanMessage({
+        content: text,
+        additional_kwargs: {},
+    });
     human1.name = 'user';
     return human1;
 }
 
 function human2(text: string, name: string) {
-    const human2 = new HumanChatMessage(text);
+    const human2 = new HumanMessage({
+        content: text,
+        additional_kwargs: {},
+    });
     human2.name = name;
     return human2;
 }
@@ -34,17 +40,6 @@ export default async function handler(
         truthfulnessRating: 0,
     };
 
-    console.log(
-        'explainTruthfulnessRating.ts',
-        input1,
-        ',',
-        input2,
-        ',',
-        character,
-        ',',
-        truthfulnessRating
-    );
-
     const promptPrefix = `
     RESPONSE:
     \`\`\`
@@ -64,11 +59,24 @@ export default async function handler(
         prompt = `we were unable to evaluate the response for truthfulness. Please give your best explanation as to why we could not, but also describe which parts are factual and not factual.`;
     }
     try {
-        const response = await chat.call([new HumanChatMessage(promptPrefix+prompt)]);
+        const response = await chat.invoke([new HumanMessage({
+            content: promptPrefix+prompt,
+            additional_kwargs: {},
+        })]);
 
-        res.status(200).json(response);
+        // Convert the LangChain message to a plain object before sending
+        const plainResponse = {
+            content: response.content,
+            type: response._getType(),
+        };
+        
+        res.status(200).json(plainResponse);
     } catch (error) {
         // console.error(error);
-        res.status(500).json(new AIChatMessage('there was an error'));
+        // Create a plain error object instead of an AIMessage
+        res.status(500).json({ 
+            content: 'there was an error',
+            type: 'error'
+        });
     }
 }

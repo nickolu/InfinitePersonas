@@ -22,15 +22,20 @@ function HomePageContent() {
     if (selectedCharacter) {
         characterChat = (
             <CharacterChat character={selectedCharacter}>
-                <Box mt={2}>
+                <Stack mt={2} direction="column" alignItems="flex-start" spacing={1}>
+                
+                    <Typography variant="h6" sx={{mb: 0}}>
+                        You are now chatting with {selectedCharacter.name}
+                    </Typography>
                     <Button
+                        variant="outlined"
                         onClick={() => {
                             setSelectedCharacter(null);
                         }}
                     >
                         Chat with someone else
                     </Button>
-                </Box>
+                </Stack>
             </CharacterChat>
         );  
     }
