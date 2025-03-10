@@ -24,7 +24,7 @@ export default async function handler(
 ) {
     const chat = new ChatOpenAI({
         temperature: 0,
-        modelName: process.env.RATE_TRUTHFULNESS_GPT_MODEL,
+        modelName: process.env.NEXT_PUBLIC_RATE_TRUTHFULNESS_GPT_MODEL,
     });
     const {input1, input2, character, truthfulnessRating} = req?.body
         ?.params || {

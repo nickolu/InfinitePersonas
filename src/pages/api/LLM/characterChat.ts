@@ -16,7 +16,7 @@ export default async function handler(
 ) {
   const chat = new ChatOpenAI({
     temperature: 0.7,
-    modelName: process.env.CHARACTER_CONVERSATION_GPT_MODEL,
+    modelName: process.env.NEXT_PUBLIC_CHARACTER_CONVERSATION_GPT_MODEL,
   });
   const {character, messages} = req?.body?.params || {
     character: {name: 'an Erroring Robot'},
